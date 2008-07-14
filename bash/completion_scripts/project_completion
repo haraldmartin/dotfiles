@@ -7,7 +7,7 @@ class ProjectCompletion
   
   def matches
     projects.select do |task|
-      task[0, typed.length] == typed
+      task[0, typed.length].downcase == typed.downcase
     end
   end
   
