@@ -2,7 +2,6 @@ source ~/.bash/aliases
 source ~/.bash/completions
 source ~/.bash/paths
 source ~/.bash/config
+source ~/.bash/functions
 
-if [ -f ~/.bashrc ]; then
-  . ~/.bashrc
-fi
+[[ -f ~/.bashrc ]] && source ~/.bashrc

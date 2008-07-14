@@ -1,14 +1,35 @@
 [user]
-	name = Ryan Bates
-	email = ryan@railscasts.com
+	name = Martin Ström
+	email = my-name@my-domain.se
 [alias]
+  put = push origin HEAD
 	co = checkout
-[color]
-	diff = auto
-	status = auto
-	branch = auto
-[core]
-	excludesfile = /Users/rbates/.gitignore
-	editor = mate -w
+	changes = diff --name-status -r
+  up = !sake git:update
+  ci = !sake git:push
+[diff]
+  renames = true
 [apply]
 	whitespace = nowarn
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[mirror]
+	summary = true
+[core]
+	excludesfile = /Users/martin/.gitignore
+	editor = mate -w

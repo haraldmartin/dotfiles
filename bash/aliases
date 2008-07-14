@@ -1,7 +1,90 @@
-. ~/.zsh/aliases
+# editor
+alias mate="mate -r"
+alias e='mate'
+alias ed='mate .'
 
-# changing directory to code project
-function c { cd ~/code/$1; }
+# ls
+alias ls='ls -hFG'
+alias lsd='ls | grep \/ | sort'
+alias ll='ls -hl'
+alias la='ls -hlA'
+alias l='ls -hFG $1'
+alias lt='ll -t'
+
+# tail
+alias tf='tail -f'
+alias t500='tail -n 500'
+alias t1000='tail -n 1000'
+alias t2000='tail -n 2000'
+
+# cd
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# history
+alias h='history'
+alias h?="history | grep "
+
+# clear
+alias c='clear'
+alias cl='clear; l'
+alias cls='clear; ls'
+
+# grep
+alias g='grep'
+alias grep='grep --color=ALWAYS'
+alias egrep='egrep --color=ALWAYS'
 
 # misc
-alias reload='. ~/.bash_profile'
+alias o='open'
+alias md='mkdir -p'
+alias disable-auto-prompt='unset PROMPT_COMMAND'
+
+alias hosts='mate /etc/hosts'
+alias profile='mate -w ~/.bash_profile && reload'
+alias reload='source ~/.bash_profile'
+
+alias apachectl="sudo apachectl"
+alias imgwh='sips -g pixelWidth -g pixelHeight'
+alias flushdns='dscacheutil -flushcache'
+alias xhr="curl -H 'Accept:text/javascript'"
+alias flash_log='tail -f ~/Library/Preferences/Macromedia/Flash\ Player/logs/flashlog.txt'
+alias error_log='tail -f /private/var/log/apache2/error_log'
+
+# rails
+alias ss='./script/server -p `~/bin/available_rails_port`'
+alias ssp='./script/server -e production -p 7000'
+alias sc='./script/console'
+
+# svn
+alias sup='svn update'
+alias sst='svn status -u'
+alias slog='svn log | more'
+alias sex='svn export'
+alias supi='svn up --ignore-externals'
+alias svnclear='find . -name .svn -print0 | xargs -0 rm -rf' # removes all .svn folders from directory recursively
+alias svnaddall='svn status | grep "^\?" | awk "{print \$2}" | xargs svn add' # adds all unadded files
+alias scom='svn commit -m "$1" "$2"'
+
+# git
+alias gst='git status'
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gun='git status | grep unmerged'
+
+# dates
+alias getdt="$(date '+%Y-%m-%d %H:%M:%S')"
+alias getdtf="echo \"$(date '+%Y-%m-%d-%H.%M.%S')\""
+
+# commands starting with % for pasting from web
+alias %=' '
+
+# changing directory to code project
+function p { cd ~/Projects/$1; }

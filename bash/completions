@@ -1,4 +1,9 @@
+bind "set completion-ignore-case on"
+bind "set bell-style none"
+bind "set show-all-if-ambiguous On"
+
+# load completion scripts
 source ~/.bash/completion_scripts/git_completion
 complete -C ~/.bash/completion_scripts/rake_completion -o default rake
-complete -C ~/.bash/completion_scripts/project_completion -o default c
+complete -C ~/.bash/completion_scripts/project_completion -o default p
 complete -C ~/.bash/completion_scripts/capistrano_completion -o default cap

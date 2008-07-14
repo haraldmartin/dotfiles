@@ -1,0 +1,67 @@
+function mkcd() {
+    mkdir -p "$1"
+    cd "$1"
+}
+
+function title() { 
+  unset PROMPT_COMMAND
+  echo -ne "\e]0;$1\a"
+}
+
+function psgrep() {
+	local name=$1
+	ps auxww | grep -i --color=never "[${name:0:1}]${name:1}"
+}
+
+function pid() {
+  psgrep "$1" | awk '{print $2}'	
+}
+
+function killgrep() {
+  id=`pid "$1"`
+  pid "$id" | xargs kill -9
+  echo "killed $id"
+}
+
+function php4() {
+	phpversion 4
+}
+
+function php5() {
+	phpversion 5
+}
+
+function phpversion() {
+	local VERSION=$1
+	local TARGET="/etc/httpd/users/php.conf"
+	if [[ $VERSION ]]; then
+		sudo ln -nfs "/etc/httpd/users/php$VERSION.conf.template" $TARGET
+		phpversion
+		sudo apachectl restart
+	else
+		local PHP4=$(ls -la $TARGET | grep php4)
+		local CURRENT_VERSION
+		if [[ $PHP4 ]]; then
+			CURRENT_VERSION=4
+		else
+			CURRENT_VERSION=5
+		fi
+		echo "Current PHP version is $CURRENT_VERSION";
+	fi
+}
+
+function pw() {
+  security find-generic-password -a $1 -g 2>&1 | grep password | cut -d '"' -f2
+}
+
+function imgdim() {
+  if [[ $1 == '--html' || $1 == '-h' ]]; then
+    sips -g pixelWidth -g pixelHeight "$2" \
+    |awk '/pixelWidth/  { printf("width=\"%d\" ",  $2) }
+          /pixelHeight/ { printf("height=\"%d\" ", $2) }'
+  else
+    sips -g pixelWidth -g pixelHeight "$1" \
+    |awk '/pixelWidth/  { printf("%d X ",  $2) }
+          /pixelHeight/ { printf("%d", $2) }'
+  fi
+}

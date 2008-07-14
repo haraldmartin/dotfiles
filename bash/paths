@@ -1,2 +1,8 @@
-export PATH="~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/git/bin:$PATH"
+export PATH=/opt/local/bin
+export PATH=$PATH:/opt/local/sbin
+export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:~/bin
+export PATH=$PATH:/usr/local/mysql/bin:$PATH
+export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
