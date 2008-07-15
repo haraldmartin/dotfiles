@@ -56,6 +56,7 @@ alias error_log='tail -f /private/var/log/apache2/error_log'
 alias ss='./script/server -p `~/bin/available_rails_port`'
 alias ssp='./script/server -e production -p 7000'
 alias sc='./script/console'
+alias migrate='rake db:migrate db:test:clone'
 
 # svn
 alias sup='svn update'
