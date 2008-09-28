@@ -58,6 +58,7 @@ alias ssp='./script/server -e production -p 7000'
 alias sc='./script/console'
 alias sg='./script/generate'
 alias migrate='rake db:migrate db:test:clone'
+alias restart='touch tmp/restart.txt' # for passenger
 
 # svn
 alias sup='svn update'
