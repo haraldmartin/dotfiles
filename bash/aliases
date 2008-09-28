@@ -89,4 +89,5 @@ alias getdtf="echo \"$(date '+%Y-%m-%d-%H.%M.%S')\""
 alias %=' '
 
 # changing directory to code project
-function p { cd ~/Projects/$1; }
+function p  { cd ~/Projects/$1; }
+function rp { cd $1; }
