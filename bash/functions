@@ -97,3 +97,12 @@ function git_info_for_prompt() {
 function authme() {
   ssh $1 'cat >>.ssh/authorized_keys' <~/.ssh/id_rsa.pub
 }
+
+function gco() {
+  local branch=$1
+  if [[ $branch ]]; then
+    git co $branch
+  else
+    git co master
+  fi
+}
