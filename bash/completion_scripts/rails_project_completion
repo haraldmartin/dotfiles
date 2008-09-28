@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+class RailsProjectCompletion
+  def initialize(command)
+    @command = command
+  end
+  
+  def matches
+    projects.select do |task|
+      #task[0, typed.length].downcase == typed.downcase
+      task.sub('/Users/martin/Projects/', '')[0, typed.length].downcase == typed.downcase
+    end
+  end
+  
+  def typed
+    @command[/\s(.+?)$/, 1] || ''
+  end
+  
+  def projects
+    `for file in /etc/apache2/passenger_pane_vhosts/*.vhost.conf; do grep DocumentRoot $file | awk '{print $2}' | sed 's/\"//g' | sed 's/\\/public$//g' ; done`.split("\n")
+  end
+end
+
+puts RailsProjectCompletion.new(ENV["COMP_LINE"]).matches
+exit 0
