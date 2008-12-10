@@ -1,10 +1,10 @@
 [user]
-	name = Martin Ström
-	email = my-name@my-domain.se
+  name = Martin Ström
+  email = my-name@my-domain.se
 [alias]
   put = push origin HEAD
-	co = checkout
-	changes = diff --name-status -r
+  co = checkout
+  changes = diff --name-status -r
   up = !sake git:update
   ci = !sake git:push
 [diff]

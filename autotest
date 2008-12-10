@@ -1,0 +1,14 @@
+
+module Autotest::Growl
+  def self.growl title, msg, img, pri=0, sticky=""
+    system "growlnotify -n autotest --image #{img} -p #{pri} -m #{msg.inspect} #{title} #{sticky}"
+  end
+  
+  Autotest.add_hook :red do |at|
+    growl "Test Results", "#{at.results.last.slice(/^(\d+) examples?, (\d+) failures?$/)}", "/Users/rgarver/Pictures/ProjectIcons/rails_fail.png", 2, "-s"
+  end
+  
+  Autotest.add_hook :green do |at|
+    growl "Test Results", "#{at.results.last.slice(/^(\d+) examples?, (\d+) failures?$/)}", "/Users/rgarver/Pictures/ProjectIcons/rails_ok.png"
+  end
+end
