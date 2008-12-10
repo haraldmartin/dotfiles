@@ -63,12 +63,14 @@ alias restart='touch tmp/restart.txt' # for passenger
 # svn
 alias sup='svn update'
 alias sst='svn status -u'
+alias ssta='svn status | grep -v "^?"'
 alias slog='svn log | more'
 alias sex='svn export'
 alias supi='svn up --ignore-externals'
 alias svnclear='find . -name .svn -print0 | xargs -0 rm -rf' # removes all .svn folders from directory recursively
 alias svnaddall='svn status | grep "^\?" | awk "{print \$2}" | xargs svn add' # adds all unadded files
 alias scom='svn commit -m "$1" "$2"'
+alias svnd='svn diff | cdiff'
 
 # git
 alias gst='git status'
