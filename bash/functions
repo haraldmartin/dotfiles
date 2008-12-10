@@ -43,6 +43,11 @@ function parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
+# http://henrik.nyh.se/2008/12/git-dirty-prompt
+function parse_git_dirty() {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
 function git_info_for_prompt() {
   local g="$(git rev-parse --git-dir 2>/dev/null)"
   if [ -n "$g" ]; then
@@ -89,7 +94,7 @@ function git_info_for_prompt() {
     if [ -n "$1" ]; then
       printf "$1" "${b##refs/heads/}$r"
     else
-      printf " (%s)" "${b##refs/heads/}$r"
+      printf " (%s%s)" "${b##refs/heads/}$r$(parse_git_dirty)"
     fi
   fi
 }
