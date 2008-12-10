@@ -111,3 +111,7 @@ function gco() {
     git co master
   fi
 }
+
+function mategem() {
+  mate $GEMDIR/gems/`$(which ls) $GEMDIR/gems | grep --color=never $1.* | sort | tail -1`/
+}
