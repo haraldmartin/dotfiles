@@ -33,3 +33,6 @@
 [core]
 	excludesfile = /Users/martin/.gitignore
 	editor = mate -w
+[github]
+	user = haraldmartin
+	token = 8ae1335e46bc0f97491e9ac84868fd8c
