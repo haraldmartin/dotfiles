@@ -6,7 +6,6 @@ export SVN_EDITOR='mate -w'
 export LC_CTYPE=en_US.UTF-8
 
 # misc
-export SVNREP='file:///Users/martin/Repository/svn'
 export GEMDIR=`gem env gemdir`
 
 # prompt
