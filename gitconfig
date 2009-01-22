@@ -7,6 +7,7 @@
   changes = diff --name-status -r
   up = !sake git:update
   ci = !sake git:push
+	undo-commit = reset --soft HEAD@{1}
 [diff]
   renames = true
 [apply]
