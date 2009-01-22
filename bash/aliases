@@ -88,8 +88,9 @@ alias gun='git status | grep unmerged'
 alias getdt="$(date '+%Y-%m-%d %H:%M:%S')"
 alias getdtf="echo \"$(date '+%Y-%m-%d-%H.%M.%S')\""
 
-# commands starting with % for pasting from web
+# commands starting with % or $ for pasting from web
 alias %=' '
+alias $=' '
 
 # changing directory to code project
 function p  { cd ~/Projects/$1; }
