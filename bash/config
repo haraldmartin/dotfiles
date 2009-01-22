@@ -67,9 +67,11 @@ function set_ls_colors() {
 
 # http://pseudogreen.org/blog/set_tab_names_in_leopard_terminal.html
 function set_window_and_tab_title() {
-    local title="$1"
+    local path=$1
+    local title="${path##*/}"
     [[ -z "$title" ]] && title="root"
+    [[ "$path" == $HOME ]] && title="~"
     echo -ne "\e]0;${title}\a"
 }
 
-PROMPT_COMMAND='set_window_and_tab_title "${PWD##*/}"'
+PROMPT_COMMAND='set_window_and_tab_title "${PWD}"'
