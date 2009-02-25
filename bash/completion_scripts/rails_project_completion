@@ -17,7 +17,19 @@ class RailsProjectCompletion
   end
   
   def projects
-    `for file in /etc/apache2/passenger_pane_vhosts/*.vhost.conf; do grep DocumentRoot $file | awk '{print $2}' | sed 's/\"//g' | sed 's/\\/public$//g' ; done`.split("\n")
+    passenger_projects + apacherb_projects
+  end
+  
+  def passenger_projects
+    find_document_roots('passenger_pane_vhosts')
+  end
+  
+  def apacherb_projects
+    find_document_roots('apacherb_vhosts')
+  end
+  
+  def find_document_roots(folder)
+    `for file in /etc/apache2/#{folder}/*.conf; do grep DocumentRoot $file | awk '{print $2}' | sed 's/\"//g' | sed 's/\\/public$//g' ; done`.split("\n")
   end
 end
 
