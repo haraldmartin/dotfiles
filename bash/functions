@@ -32,6 +32,10 @@ function imgdim() {
     sips -g pixelWidth -g pixelHeight "$2" \
     |awk '/pixelWidth/  { printf("width=\"%d\" ",  $2) }
           /pixelHeight/ { printf("height=\"%d\" ", $2) }'
+  elif [[ $1 == '--css' || $1 == '-c' ]]; then
+    sips -g pixelWidth -g pixelHeight "$2" \
+    |awk '/pixelWidth/  { printf("width: %dpx; ",  $2) }
+          /pixelHeight/ { printf("height: %dpx; ", $2) }'
   else
     sips -g pixelWidth -g pixelHeight "$1" \
     |awk '/pixelWidth/  { printf("%d X ",  $2) }
@@ -45,10 +49,14 @@ function parse_git_branch() {
 
 # http://henrik.nyh.se/2008/12/git-dirty-prompt
 function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  #[ -d .git ] || return 1
+  git diff --quiet || echo "*"
+  #[[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "⚡"
 }
 
 function git_info_for_prompt() {
+ # [ -d .git ] || return 1
+  
   local g="$(git rev-parse --git-dir 2>/dev/null)"
   if [ -n "$g" ]; then
     local r
