@@ -36,14 +36,6 @@ alias g='grep'
 alias grep='grep --color=ALWAYS'
 alias egrep='egrep --color=ALWAYS'
 
-# alternative to "rails" command to use templates
-function railsapp {
-  template=$1
-  appname=$2
-  shift 2
-  rails $appname -m http://github.com/ryanb/rails-templates/raw/master/$template.rb $@
-}
-
 # misc
 alias o='open'
 alias md='mkdir -p'
