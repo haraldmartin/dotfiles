@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 def change_log(stream)
   ActiveRecord::Base.logger = Logger.new(stream)
