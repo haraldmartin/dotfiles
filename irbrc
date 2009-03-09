@@ -1,16 +1,11 @@
 #!/usr/bin/env ruby
-
 require 'irb/completion'
 require 'irb/ext/save-history'
 
 IRB.conf[:SAVE_HISTORY] = 1000
-IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-save-history" 
 IRB.conf[:PROMPT_MODE]  = :SIMPLE
 IRB.conf[:AUTO_INDENT]  = true
-
-load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
-
-alias :x :exit
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
 class Object
   # list methods which aren't in superclass
@@ -34,3 +29,5 @@ class Object
 end
 
 load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
+
+alias :x :exit
