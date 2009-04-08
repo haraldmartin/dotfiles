@@ -17,7 +17,7 @@ class RailsProjectCompletion
   end
   
   def projects
-    passenger_projects + apacherb_projects
+    passenger_projects # + apacherb_projects
   end
   
   def passenger_projects
