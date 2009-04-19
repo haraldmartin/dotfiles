@@ -16,16 +16,18 @@ export GEMDIR=`gem env gemdir`
 # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
 function set_prompt() {
   local CYAN="\[\033[0;36m\]"
+  local BLUE="\[\033[0;34m\]"
+  local BLUE_LIGHT="\[\033[1;34m\]"
   local YELLOW="\[\033[0;33m\]"
-  local GRAY="\[\033[0;33m\]"
+  local BROWN="\[\033[0;33m\]"
+  local GRAY="\[\033[1;30m\]"
+  local LIGHT_GRAY="\[\033[0;37m\]"
   local RED="\[\033[0;31m\]"
   local GREEN="\[\033[0;32m\]"
   local NO_COLOR="\[\033[0m\]"
-  local GRAY="\[\033[1;30m\]"
-  local LIGHT_GRAY="\[\033[0;37m\]"
   local CYAN="\[\033[0;36m\]"
   local LIGHT_CYAN="\[\033[1;36m\]"
-  PS1="\n${YELLOW}\w${GREEN}\$(git_info_for_prompt) ${CYAN}→ ${NO_COLOR}"
+  PS1="\n${BLUE}\w${YELLOW}\$(git_info_for_prompt) ${GREEN}● ${NO_COLOR}"
 }
 
 set_prompt
