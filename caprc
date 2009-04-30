@@ -1,4 +1,4 @@
-ssh_options[:keys] = %w(/Users/martin/.ssh/id_dsa)
+ssh_options[:keys] = %w(/Users/martin/.ssh/id_rsa)
 ssh_options[:forward_agent] = true 
 ssh_options[:paranoid] = false
 
@@ -35,3 +35,6 @@ namespace :sys do
     stream "/usr/bin/saidar"
   end
 end
+
+task :growl do system %{/usr/local/bin/growlnotify -m 'Capistrano "deploy:restart" task Done'} end
+after "deploy:restart", "growl"
