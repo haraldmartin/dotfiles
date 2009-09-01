@@ -1,5 +1,12 @@
 #!/usr/bin/env ruby
 
+begin
+  require 'rubygems' unless defined?(Gem)
+  require 'hirb' # sudo gem install cldwalker-hirb --source http://gems.github.com
+  Hirb.enable
+rescue LoadError
+end
+
 def change_log(stream)
   ActiveRecord::Base.logger = Logger.new(stream)
   ActiveRecord::Base.clear_active_connections!
@@ -12,6 +19,16 @@ end
 def hide_log
   change_log(nil)
 end
+
+script_console_running = IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers')
+# rails_running = ENV.include?('RAILS_ENV') && !(IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers'))
+# irb_standalone_running = !script_console_running && !rails_running
+
+if script_console_running
+  require 'logger'
+  Object.const_set(:RAILS_DEFAULT_LOGGER, Logger.new(STDOUT))
+end
+
 
 # IRB.conf[:IRB_RC] = Proc.new do
 #   ActiveRecord::Base.logger = Logger.new(STDOUT)
