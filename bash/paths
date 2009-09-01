@@ -1,16 +1,5 @@
-export MAGICK_HOME="/usr/local/ImageMagick-6.5.0"
-export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib"
-
-export PATH=$PATH:/usr/X11/bin
-export PATH=$PATH:/opt/local/bin
-export PATH=$PATH:/opt/local/sbin
-export PATH=$PATH:/opt/local/bin
-export PATH=$PATH:/usr/local/sbin
-export PATH=$PATH:/usr/local/git/bin
+export PATH=~/bin
+export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 export PATH=$PATH:/usr/local/mysql/bin
-export PATH=$PATH:~/bin
-export PATH=$PATH:"$MAGICK_HOME/bin"
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH" 
-
-export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
+export MANPATH="/usr/local/man:/usr/local/mysql/man:$MANPATH"
