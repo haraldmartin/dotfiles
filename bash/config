@@ -11,6 +11,7 @@ export __CF_USER_TEXT_ENCODING=0x1F5:0x8000100:0x8000100
 
 # misc
 export GEMDIR=`gem env gemdir`
+export INPUTRC=~/.inputrc
 
 # prompt
 # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
