@@ -75,9 +75,20 @@ function set_ls_colors() {
 function set_window_and_tab_title() {
     local path=$1
     local title="${path##*/}"
+    
+    # include the parent dir if we're in a src or lib dir since that's proably a little more interesting
+    if [[ "$title" = "src" ]]; then
+      title="${1%%/src}"
+      title="${title##*/}/src"
+    fi
+    if [[ "$title" = "lib" ]]; then
+      title="${1%%/lib}"
+      title="${title##*/}/lib"
+    fi
     [[ -z "$title" ]] && title="root"
     [[ "$path" == $HOME ]] && title="~"
-    echo -ne "\e]0;${title}\a"
+    
+    echo -ne "\033]0;${title}\007"
 }
 
 PROMPT_COMMAND='set_window_and_tab_title "${PWD}"'

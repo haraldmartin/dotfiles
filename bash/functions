@@ -5,7 +5,7 @@ function mkcd() {
 
 function title() { 
   unset PROMPT_COMMAND
-  echo -ne "\e]0;$1\a"
+  echo -ne "\033]0;$1\007"
 }
 
 function psgrep() {
