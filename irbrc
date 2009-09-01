@@ -31,3 +31,16 @@ end
 load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
 
 alias :x :exit
+
+# http://judofyr.net/posts/copy-paste-irb.html
+def copy(str)
+  IO.popen('pbcopy', 'w') { |f| f << str.to_s }
+end
+
+def paste
+  `pbpaste`
+end
+
+def ep
+  eval(paste)
+end
