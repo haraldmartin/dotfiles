@@ -142,3 +142,6 @@ function httpdump() {
  
 # All the above tested only on OS X.
 # http://gist.github.com/90062
+function isreg {
+  whois $1 | grep -q 'No match' && echo "No" || echo "Yes"
+}
