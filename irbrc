@@ -4,7 +4,6 @@ require 'irb/ext/save-history'
 
 IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:PROMPT_MODE]  = :SIMPLE
-IRB.conf[:AUTO_INDENT]  = true
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
 class Object
@@ -35,6 +34,15 @@ alias :x :exit
 # http://judofyr.net/posts/copy-paste-irb.html
 def copy(str)
   IO.popen('pbcopy', 'w') { |f| f << str.to_s }
+end
+
+# http://github.com/ryanb/dotfiles/commit/78c149fb7e9ac1f2d89ed3a7518aee293b63b747
+def copy_session
+  history = Readline::HISTORY.entries
+  index = history.rindex("exit") || -1
+  content = history[(index+1)..-2].join("\n")
+  puts content
+  copy content
 end
 
 def paste
