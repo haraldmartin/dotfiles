@@ -43,20 +43,8 @@ function imgdim() {
   fi
 }
 
-function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-# http://henrik.nyh.se/2008/12/git-dirty-prompt
-function parse_git_dirty() {
-  #[ -d .git ] || return 1
-  git diff --quiet || echo "*"
-  #[[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "⚡"
-}
-
 function git_info_for_prompt() {
  # [ -d .git ] || return 1
-  
   local g="$(git rev-parse --git-dir 2>/dev/null)"
   if [ -n "$g" ]; then
     local r
@@ -120,29 +108,17 @@ function gco() {
   fi
 }
 
-function mategem() {
-  mate $GEMDIR/gems/`$(which ls) $GEMDIR/gems | grep --color=never $1.* | sort | tail -1`/
-}
-
-# alternative to "rails" command to use templates
-function railsapp {
-  template=$1
-  appname=$2
-  shift 2
-  rails $appname -m http://github.com/ryanb/rails-templates/raw/master/$template.rb $@
-}
-
 # Monitor HTTP requests being made from your machine with a one-liner..
 # Replace "en1" below with your network interface's name (usually en0 or en1)
 # (again replace "en1" with correct network interface name)
+#
+# http://gist.github.com/90062
+
 function httpdump() {
 	interface="${1:-en1}"
 	sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
 }
  
-# All the above tested only on OS X.
-# http://gist.github.com/90062
-
 function t() {
   command="cd '`pwd`'"
   osascript -e 'tell application "Terminal" to activate' \
