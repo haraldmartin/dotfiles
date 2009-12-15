@@ -16,7 +16,7 @@ class ProjectCompletion
   end
   
   def projects
-    `ls ~/Projects/`.split
+    `ls -1 ~/Projects/`.split("\n")
   end
 end
 
