@@ -1,8 +1,8 @@
 source ~/.bash/aliases
 source ~/.bash/completions
 source ~/.bash/paths
-source ~/.bash/config
 source ~/.bash/functions
+source ~/.bash/config
 
 [[ -f ~/.bashrc ]] && source ~/.bashrc
 # -- start rip config -- #
