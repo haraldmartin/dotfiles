@@ -142,6 +142,15 @@ function httpdump() {
  
 # All the above tested only on OS X.
 # http://gist.github.com/90062
+
+function t() {
+  command="cd '`pwd`'"
+  osascript -e 'tell application "Terminal" to activate' \
+            -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down' \
+            -e "tell application \"Terminal\" to do script with command \"$command\" in last tab of window 1" \
+            &>/dev/null
+}
+
 function isreg {
   whois $1 | grep -q 'No match' && echo "No" || echo "Yes"
 }
