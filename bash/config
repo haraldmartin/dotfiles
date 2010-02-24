@@ -34,7 +34,12 @@ function set_prompt() {
   local CYAN="\[\033[0;36m\]"
   local LIGHT_CYAN="\[\033[1;36m\]"
   export GIT_PS1_SHOWDIRTYSTATE=1
-  export PS1="\n${BLUE}\w${YELLOW}\$(__git_ps1 '[%s]') ${GREEN}● ${NO_COLOR}"
+  
+  if [[ `uname` == 'Linux' ]]; then
+    export PS1="\n${YELLOW}[\u] ${BLUE}\w${YELLOW}\$(__git_ps1 '[%s]') ${GREEN}● ${NO_COLOR}"
+  else
+    export PS1="\n${BLUE}\w${YELLOW}\$(__git_ps1 '[%s]') ${GREEN}● ${NO_COLOR}"
+  fi
 }
 
 set_prompt
