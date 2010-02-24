@@ -86,3 +86,22 @@ function vpsstats {
 function pman {
   man -t "${1}" | open -f -a /Applications/Preview.app/
 }
+
+function _growl_prompt_command {
+  local laststatus=$?
+  eval $PREV_PROMPT_COMMAND
+  growlnotify -n Shell -m "$PROMPT_MEMO exited with $laststatus" Shell
+  PROMPT_COMMAND=$PREV_PROMPT_COMMAND
+  PREV_PROMPT_COMMAND=
+  PROMPT_MEMO=
+}
+ 
+function growldone {
+  PREV_PROMPT_COMMAND=$PROMPT_COMMAND
+  PROMPT_COMMAND=_growl_prompt_command
+  if [ $# -gt 0 ]; then
+	  PROMPT_MEMO=$@
+  else
+	  PROMPT_MEMO=Command
+  fi
+}
