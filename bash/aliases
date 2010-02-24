@@ -37,6 +37,7 @@ alias grep='grep --color=ALWAYS'
 alias egrep='egrep --color=ALWAYS'
 
 # misc
+alias s='sudo'
 alias o='open'
 alias md='mkdir -p'
 alias disable-auto-prompt='unset PROMPT_COMMAND'
