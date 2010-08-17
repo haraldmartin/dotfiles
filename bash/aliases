@@ -63,7 +63,7 @@ alias restart='touch tmp/restart.txt' # for passenger
 # svn
 alias sup='svn update'
 alias sst='svn status -u'
-alias svnd='svn diff | cdiff'
+alias sd='svn diff | colordiff'
 
 # git
 alias gst='git status'
