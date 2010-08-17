@@ -107,3 +107,62 @@ function growldone {
 	  PROMPT_MEMO=Command
   fi
 }
+
+# Generate a Ruby on Rails migration, then open the generated file.
+#
+#     henrik@Nyx /myproject$ migg add_fooed_at_to_bars fooed_at:datetime
+#
+# http://github.com/henrik/dotfiles/commit/92b18641d825ed5e5ad503132549b1ea6c95cb2c
+# 
+
+function migg {
+  if [[ -x script/generate ]]; then
+    script/generate migration $@ | ruby -e 'x = ARGF.read; puts x; path = x[/create\s+(.+)/, 1]; system("open", path)'
+  else
+    rails generate migration $@ | ruby -e 'x = ARGF.read; puts x; path = x[/create\s+(.+)/, 1]; system("open", path)'
+  fi
+}
+
+# Open the .xcodeproj file from the working directory (typically in Xcode).
+#
+#     henrik@Nyx ~/Code/iPhone/MyApp$ xc
+#     # equivalent to:
+#     open ~/Code/iPhone/MyApp/MyApp.xcodeproj
+#
+function xc {
+  open `ls | grep .xcodeproj`
+}
+
+# http://www.leancrew.com/all-this/2008/02/leopard-screen-sharing-over-the-internet/
+function hometunnel {
+  ssh -L $1:127.0.0.1:$2 -N laddarn
+}
+
+function vpstunnel {
+  ssh -L $1:127.0.0.1:$2 -N myd
+}
+
+# Rails
+function ss {
+  if [ -e script/rails ]; then
+    script/rails server $@
+  else
+    script/server $@
+  fi
+}
+
+function sc {
+  if [ -e script/rails ]; then
+    script/rails console $@
+  else
+    script/console $@
+  fi
+}
+
+function sg {
+  if [ -e script/rails ]; then
+    script/rails generate $@
+  else
+    script/generate $@
+  fi
+}
