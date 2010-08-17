@@ -56,11 +56,7 @@ alias flash_log='tail -f ~/Library/Preferences/Macromedia/Flash\ Player/logs/fla
 alias error_log='tail -f /private/var/log/apache2/error_log'
 
 # rails
-alias ss='./script/server'
-alias ssp='./script/server -e production -p 7000'
-alias sc='./script/console'
-alias sg='./script/generate'
-alias migrate='rake db:migrate db:test:clone'
+alias r='rails'
 alias restart='touch tmp/restart.txt' # for passenger
 
 # svn
