@@ -1,7 +1,7 @@
 # editor
 alias mate="mate -r"
-alias e='mate'
-alias ed='mate .'
+alias e='$EDITOR'
+alias ed='$EDITOR .'
 
 # ls
 alias ls='ls -hFG'
