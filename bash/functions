@@ -64,12 +64,12 @@ function gco() {
 #
 # http://gist.github.com/90062
 
-function httpdump() {
+function httpdump {
 	interface="${1:-en1}"
 	sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
 }
  
-function t() {
+function t {
   command="cd '`pwd`'"
   osascript -e 'tell application "Terminal" to activate' \
             -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down' \
