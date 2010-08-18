@@ -1,4 +1,4 @@
-. ~/bin/z/z.sh
+[[ -e ~/bin/z/z.sh ]] && . ~/bin/z/z.sh
 
 function mkcd() {
     mkdir -p "$1"
