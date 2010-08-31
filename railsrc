@@ -20,17 +20,7 @@ def hide_log
   change_log(nil)
 end
 
-script_console_running = IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers')
-# rails_running = ENV.include?('RAILS_ENV') && !(IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers'))
-# irb_standalone_running = !script_console_running && !rails_running
-
-if script_console_running
-  require 'logger'
-  Object.const_set(:RAILS_DEFAULT_LOGGER, Logger.new(STDOUT))
+if defined?(ActiveRecord::Base)
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  ActiveRecord::Base.instance_eval { alias :[] :find }
 end
-
-
-# IRB.conf[:IRB_RC] = Proc.new do
-#   ActiveRecord::Base.logger = Logger.new(STDOUT)
-#   ActiveRecord::Base.instance_eval { alias :[] :find }
-# end
