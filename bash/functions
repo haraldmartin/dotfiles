@@ -164,3 +164,7 @@ function sg {
     script/generate $@
   fi
 }
+
+# changing directory to code project
+function p  { cd "$HOME/Projects/$*"; }
+function rp { cd "$*"; }

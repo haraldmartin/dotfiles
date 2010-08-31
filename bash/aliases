@@ -83,7 +83,3 @@ alias getdtf="echo \"$(date '+%Y-%m-%d-%H.%M.%S')\""
 
 # commands starting with % for pasting from web
 alias %=' '
-
-# changing directory to code project
-function p  { cd "$HOME/Projects/$*"; }
-function rp { cd "$*"; }
