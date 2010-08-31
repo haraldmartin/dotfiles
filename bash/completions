@@ -3,7 +3,7 @@ bind "set bell-style none"
 bind "set show-all-if-ambiguous On"
 
 # load completion scripts
-source ~/.bash/completion_scripts/git_completion
+source /usr/local/git/contrib/completion/git-completion.bash
 complete -C ~/.bash/completion_scripts/rake_completion          -o default rake
 complete -C ~/.bash/completion_scripts/project_completion       -o default p
 complete -C ~/.bash/completion_scripts/rails_project_completion -o default rp
