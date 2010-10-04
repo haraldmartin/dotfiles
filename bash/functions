@@ -168,3 +168,29 @@ function sg {
 # changing directory to code project
 function p  { cd "$HOME/Projects/$*"; }
 function rp { cd "$*"; }
+
+
+#
+# http://zachinglis.com/2009/make-your-rails-development-environment-slower-easily
+#
+# Make port 80 "real life" speeds
+# You can also use Mongrel ports.
+# 
+function slow_port {
+  # Set the port variable if no port inputted. Defaulted to 80 (for Passenger).
+  if [ -z "$1" ]
+  then port=80
+  else port=$1
+  fi
+  
+  # Slow the ports.
+  sudo ipfw pipe 1 config bw 15KByte/s
+  sudo ipfw add 1 pipe 1 src-port $port
+  sudo ipfw add 1 pipe 1 dst-port $port
+  echo "Port $port succesfully slowed."
+}
+
+function unslow_port {
+  sudo ipfw delete 1
+  echo "Port succesfully un-slowed."
+}
