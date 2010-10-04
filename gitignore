@@ -2,6 +2,7 @@
 .svn
 *~
 
+*.swp
 *.log
 *.sock*
 *.pyo
