@@ -56,6 +56,11 @@ alias xhr="curl -H 'Accept:text/javascript'"
 alias flash_log='tail -f ~/Library/Preferences/Macromedia/Flash\ Player/logs/flashlog.txt'
 alias error_log='tail -f /private/var/log/apache2/error_log'
 
+alias hide-file="setfile -a V"
+alias show-file="setfile -a v"
+
+alias ts="terminitor start"
+
 # rails
 alias r='rails'
 alias mig='rake db:migrate db:test:clone'
