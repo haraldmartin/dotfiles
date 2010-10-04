@@ -46,7 +46,6 @@ alias ql='qlmanage -p 2>/dev/null'
 alias myd='ssh myd'
 
 alias hosts='mate /etc/hosts'
-alias profile='mate -w ~/.bash_profile && reload'
 alias reload='source ~/.bash_profile'
 
 alias purl='echo `pbpaste`; curl -O --location "`pbpaste`"'
