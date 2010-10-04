@@ -43,6 +43,7 @@ alias md='mkdir -p'
 alias disable-auto-prompt='unset PROMPT_COMMAND'
 alias transmit='open -a Transmit'
 alias ql='qlmanage -p 2>/dev/null'
+alias myd='ssh myd'
 
 alias hosts='mate /etc/hosts'
 alias profile='mate -w ~/.bash_profile && reload'
