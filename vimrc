@@ -166,6 +166,9 @@ vnoremap ; :
 " Rails Edit routes
 command! Rroutes :e config/routes.rb
 command! Rschema :e db/schema.rb
+noremap <leader>rm :Rmodel 
+noremap <leader>rc :Rcontroller 
+noremap <leader>rv :Rview 
 
 " Automatic fold settings for specific files. Uncomment to use.
 autocmd FileType ruby setlocal foldmethod=syntax
