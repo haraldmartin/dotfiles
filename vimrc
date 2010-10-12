@@ -179,6 +179,13 @@ if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
 
+" http://vimcasts.org/episodes/running-vim-within-irb/
+" Restore cursor position
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
 
 " For the MakeGreen plugin and Ruby RSpec. Uncomment to use.
 " autocmd BufNewFile,BufRead *_spec.rb compiler rspec
