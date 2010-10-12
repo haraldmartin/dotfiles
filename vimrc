@@ -49,7 +49,7 @@ set modelines=0
 set ttyfast
 " set relativenumber
 
-set wrap                        " Turn on line wrapping.
+set nowrap                        " Turn on line wrapping.
 set scrolloff=3                   " Show 3 lines of context around the cursor.
 
 set title                         " Set the terminal's title
