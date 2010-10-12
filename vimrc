@@ -230,6 +230,6 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-if !exists(":LargeFont")
-  command LargeFont :exec "set guifont=Menlo:h18"
+command! LargeFont :set guifont=Menlo:h18
+command! SmallFont :set guifont=Menlo:h11
 endif
