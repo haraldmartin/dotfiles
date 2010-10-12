@@ -232,4 +232,9 @@ endif
 
 command! LargeFont :set guifont=Menlo:h18
 command! SmallFont :set guifont=Menlo:h11
+
+if &t_Co > 2 || has("gui_runing")
+  " enable syntax highlighting
+  syntax on
 endif
+
