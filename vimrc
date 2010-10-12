@@ -34,6 +34,7 @@ set hlsearch                      " Highlight matches.
 set showmatch
 
 nnoremap <leader><space> :noh<cr>
+nnoremap <leader>c :noh<cr>
 
 " bind control-l to hashrocket
 imap <C-l> <Space>=><Space>"
