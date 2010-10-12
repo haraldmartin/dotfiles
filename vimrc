@@ -151,6 +151,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Edit shortcuts
+" http://vimcasts.org/episodes/the-edit-command/
+map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+
 " Buffer navigation
 " noremap <leader>t :CommandT<Return>
 noremap <leader>t :PeepOpen<Return>
