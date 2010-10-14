@@ -25,7 +25,7 @@ git_bundles = %w[
 	http://github.com/vim-scripts/endwise.vim.git
 	http://github.com/vim-scripts/hexHighlight.vim.git
 	http://github.com/vim-scripts/tComment.git
-  http://github.com/vim-scripts/Align.git"
+  http://github.com/vim-scripts/Align.git
 ]
 
 require 'fileutils'
