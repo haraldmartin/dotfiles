@@ -4,27 +4,27 @@
 # from: http://tammersaleh.com/posts/the-modern-vim-config-with-pathogen
 
 git_bundles = %w[
-	http://github.com/airblade/vim-rooter.git
-	http://github.com/mileszs/ack.vim.git
-	http://github.com/reinh/vim-makegreen.git
-	http://github.com/skammer/vim-css-color.git
-	http://github.com/taxilian/nerdtree.git
-	http://github.com/tpope/vim-fugitive.git
-	http://github.com/tpope/vim-git.git
-	http://github.com/tpope/vim-haml.git
-	http://github.com/tpope/vim-markdown.git
-	http://github.com/tpope/vim-ragtag.git
-	http://github.com/tpope/vim-rails.git
-	http://github.com/tpope/vim-speeddating.git
-	http://github.com/tpope/vim-surround.git
-	http://github.com/tpope/vim-unimpaired.git
-	http://github.com/vim-scripts/ColorX.git
-	http://github.com/vim-scripts/Command-T.git
-	http://github.com/vim-scripts/Gist.vim.git
-	http://github.com/vim-scripts/camelcasemotion.git
-	http://github.com/vim-scripts/endwise.vim.git
-	http://github.com/vim-scripts/hexHighlight.vim.git
-	http://github.com/vim-scripts/tComment.git
+  http://github.com/airblade/vim-rooter.git
+  http://github.com/mileszs/ack.vim.git
+  http://github.com/reinh/vim-makegreen.git
+  http://github.com/skammer/vim-css-color.git
+  http://github.com/taxilian/nerdtree.git
+  http://github.com/tpope/vim-fugitive.git
+  http://github.com/tpope/vim-git.git
+  http://github.com/tpope/vim-haml.git
+  http://github.com/tpope/vim-markdown.git
+  http://github.com/tpope/vim-ragtag.git
+  http://github.com/tpope/vim-rails.git
+  http://github.com/tpope/vim-speeddating.git
+  http://github.com/tpope/vim-surround.git
+  http://github.com/tpope/vim-unimpaired.git
+  http://github.com/vim-scripts/ColorX.git
+  http://github.com/vim-scripts/Command-T.git
+  http://github.com/vim-scripts/Gist.vim.git
+  http://github.com/vim-scripts/camelcasemotion.git
+  http://github.com/vim-scripts/endwise.vim.git
+  http://github.com/vim-scripts/hexHighlight.vim.git
+  http://github.com/vim-scripts/tComment.git
   http://github.com/vim-scripts/Align.git
 ]
 
