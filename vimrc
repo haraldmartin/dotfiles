@@ -142,6 +142,8 @@ nnoremap <F2> za
 onoremap <F2> <C-C>za
 vnoremap <F2> zf
 
+" Nerdtree (,n)
+map <leader>n :NERDTreeToggle<CR>
 
 " Split screen things
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
