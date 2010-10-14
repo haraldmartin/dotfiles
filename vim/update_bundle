@@ -39,3 +39,6 @@ git_bundles.each do |url|
   `cd #{dir} 2>/dev/null && git pull || git clone #{url} #{dir}`
 end
 
+puts "* Updating to latest pathogen"
+autoload_dir = File.expand_path('../autoload', __FILE__)
+`curl -s http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim > #{autoload_dir}/pathogen.vim`
