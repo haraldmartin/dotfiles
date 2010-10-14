@@ -33,7 +33,7 @@ require 'fileutils'
 bundle_dir = File.expand_path('../bundle/', __FILE__)
 
 git_bundles.each do |url|
-  dirname = File.basename(url)
+  dirname = File.basename(url).sub(/\.git$/, '')
   puts "* Unpacking #{url} into #{dirname}"
   dir = File.join(bundle_dir, dirname)
   `cd #{dir} 2>/dev/null && git pull || git clone #{url} #{dir}`
