@@ -171,7 +171,7 @@ map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 noremap <leader>t :CommandT<Return>
 noremap <Leader>a :bprev<Return>
 noremap <Leader>s :bnext<Return>
-noremap <Leader>d :bd<Return>
+" noremap <Leader>d :bd<Return>
 " noremap <Leader>f :b<Return>
 
 " Controversial...swap colon and semicolon for easier commands
@@ -244,4 +244,27 @@ if &t_Co > 2 || has("gui_runing")
   " enable syntax highlighting
   syntax on
 endif
+
+" map fc <Esc>:call CleanClose(1)<cr>
+" map fq <Esc>:call CleanClose(0)
+" noremap <Leader>d :bd<Return>
+noremap <Leader>d <Esc>:call CleanClose(1)<CR>
+
+function! CleanClose(tosave)
+  if (a:tosave == 1)
+      w!
+  endif
+  let todelbufNr = bufnr("%")
+  let newbufNr = bufnr("#")
+  if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
+      exe "b".newbufNr
+  else
+      bnext
+  endif
+
+  if (bufnr("%") == todelbufNr)
+      new
+  endif
+  exe "bd".todelbufNr
+endfunction
 
