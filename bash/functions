@@ -141,6 +141,7 @@ function vpstunnel {
 
 # Rails
 function ss {
+  title "Server"
   if [ -e script/rails ]; then
     script/rails server $@
   else
@@ -149,6 +150,7 @@ function ss {
 }
 
 function sc {
+  title "Console"
   if [ -e script/rails ]; then
     script/rails console $@
   else
