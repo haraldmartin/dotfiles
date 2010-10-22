@@ -164,6 +164,11 @@ function sg {
   fi
 }
 
+function sl {
+  title "Log"
+  tail -f log/${1:-development}.log
+}
+
 # changing directory to code project
 function p  { cd "$HOME/Projects/$*"; }
 function rp { cd "$*"; }
