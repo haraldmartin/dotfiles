@@ -201,6 +201,7 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
+au FocusLost * :wa
 
 " For the MakeGreen plugin and Ruby RSpec. Uncomment to use.
 " autocmd BufNewFile,BufRead *_spec.rb compiler rspec
