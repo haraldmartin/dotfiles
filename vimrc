@@ -110,6 +110,11 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
+nnoremap <leader><cr> o<esc>
+
+" Speed up viewport scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 
 " Searching
 set gdefault
@@ -163,7 +168,7 @@ map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Buffer navigation
 " noremap <leader>t :CommandT<Return>
-noremap <leader>t :PeepOpen<Return>
+noremap <leader>t :CommandT<Return>
 noremap <Leader>a :bprev<Return>
 noremap <Leader>s :bnext<Return>
 noremap <Leader>d :bd<Return>
