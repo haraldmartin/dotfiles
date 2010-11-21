@@ -1,5 +1,5 @@
 # export EDITOR='mate -w'
-export EDITOR='mvim -f'
+export EDITOR='mvim'
 export GIT_EDITOR=$EDITOR
 
 # Set pbcopy to use UTF-8 by default
