@@ -17,6 +17,22 @@ set background=dark               " Background.
 set lines=45 columns=100          " Window dimensions.
 
 if has("gui_macvim")
-  " macmenu &File.New\ Tab key=<nop>
-  map <D-t> :CommandT<cr>
+  " Fullscreen takes up entire screen
+  set fuoptions=maxhorz,maxvert
+
+  " Command-T for CommandT
+  macmenu &File.New\ Tab key=<nop>
+  map <D-t> :CommandT<CR>
+
+  " Command-Shift-F for Ack
+  " macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
+  " map <D-F> :Ack<space>
+
+  " Command-e for ConqueTerm
+  " map <D-e> :call StartTerm()<CR>
+
+  " Command-/ to toggle comments
+  nmap <D-/> :TComment<CR>
+  vmap <D-/> :TComment<CR> gv
 end
+
