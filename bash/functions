@@ -139,6 +139,10 @@ function vpstunnel {
   ssh -L $1:127.0.0.1:$2 -N myd
 }
 
+function vpssocks {
+  ssh -ND 9999 myd
+}
+
 # Rails
 function ss {
   title "Server"
