@@ -22,3 +22,7 @@ debian/files
 *.xcodeproj/*.pbxuser
 *.xcodeproj/*.perspective*
 *.xcodeproj/*.mode1*
+
+*.swp
+*.swm
+*.swn
