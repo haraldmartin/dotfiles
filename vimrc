@@ -61,11 +61,9 @@ set foldmethod=indent
 set foldlevel=1
 set foldnestmax=2
 
-
 " Move lines up and down
 " noremap <C-J> :m +1 <CR>
 " noremap <C-K> :m -2 <CR>
-
 
 " Duplicate a selection
 " Visual mode: D
@@ -88,10 +86,7 @@ set laststatus=2                 " Show the status line all the time
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
-" Or use vividchalk
-" colorscheme topfunky-light
-colorscheme railscasts
-" colorscheme railscasts
+colorscheme railscasts_hms
 
 let mapleader = ","
 
