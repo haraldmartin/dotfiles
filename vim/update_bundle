@@ -27,6 +27,11 @@ git_bundles = %w[
   http://github.com/vim-scripts/hexHighlight.vim.git
   http://github.com/vim-scripts/tComment.git
   http://github.com/vim-scripts/Align.git
+  git://github.com/vim-scripts/ZoomWin.git
+  git://github.com/ervandew/supertab.git
+  git://github.com/Townk/vim-autoclose.git
+  git://github.com/vim-scripts/taglist.vim.git
+  git://github.com/vim-scripts/Color-Sampler-Pack.git
 ]
 
 require 'fileutils'
@@ -42,4 +47,4 @@ end
 
 puts "* Updating to latest pathogen"
 autoload_dir = File.expand_path('../autoload', __FILE__)
-`curl -s http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim > #{autoload_dir}/pathogen.vim`
+`curl -s --location http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim > #{autoload_dir}/pathogen.vim`
