@@ -229,6 +229,8 @@ nnoremap <leader>v V`]
 " quickly open up my ~/.vimrc file in a vertically split window so I can add new things to it on the fly.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
+set whichwrap+=<,>,[,] 
+
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
