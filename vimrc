@@ -164,13 +164,12 @@ map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 
 " Buffer navigation
-" noremap <leader>t :CommandT<Return>
-noremap <leader>t :CommandT<Return>
 noremap <Leader>a :bprev<Return>
 noremap <Leader>s :bnext<Return>
-" noremap <Leader>d :bd<Return>
-" noremap <Leader>f :b<Return>
 
+" Command T configuration
+noremap <leader>t :CommandT<Return>
+let g:CommandTMaxHeight=20
 " Controversial...swap colon and semicolon for easier commands
 nnoremap ; :
 vnoremap ; :
