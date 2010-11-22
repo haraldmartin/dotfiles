@@ -35,9 +35,11 @@ function set_prompt() {
   export GIT_PS1_SHOWDIRTYSTATE=1
   
   if [[ `uname -n` == 'my-domain' ]]; then
-    export PS1="\n${yellow}[\u] ${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
+    # export PS1="\n${yellow}[\u] ${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
+    export PS1="\n${yellow}[\u] ${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
   else
-    export PS1="\n${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
+    # export PS1="\n${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
+    export PS1="\n${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
   fi
 }
 
