@@ -76,7 +76,9 @@ noremap <F1> <Esc>
 
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
-" set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
+set noswapfile
+" set directory=$HOME/.vim/tmp        " Keep swap files in one location
+" set backupdir=$HOME/.vim/tmp
 
 set tabstop=2 softtabstop=2 shiftwidth=2 
 set expandtab
