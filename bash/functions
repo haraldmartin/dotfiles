@@ -8,6 +8,11 @@ function title() {
   echo -ne "\033]0;$1\007"
 }
 
+function titled() {
+  title "$*"
+  $*
+}
+
 function psgrep() {
 	local name=$1
 	ps auxww | grep -i --color=never "[${name:0:1}]${name:1}"
