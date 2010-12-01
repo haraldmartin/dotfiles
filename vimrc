@@ -213,6 +213,7 @@ noremap <leader>rv :Rview
 " Automatic fold settings for specific files. Uncomment to use.
 autocmd FileType ruby setlocal foldmethod=syntax
 autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+" autocmd FileType scss setlocal foldmethod=indent shiftwidth=2 tabstop=2
 
 " Source the vimrc file after saving it
 if has("autocmd")
