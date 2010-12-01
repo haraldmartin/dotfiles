@@ -186,6 +186,9 @@ let g:CommandTMaxHeight=20
 " ZoomWin configuration
 map <Leader>z :ZoomWin<CR>
 
+" Ack/Quickfix windows
+map <Leader>q :cclose<CR>
+
 " CTags
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
 
