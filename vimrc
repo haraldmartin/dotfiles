@@ -139,6 +139,8 @@ noremap <leader>tf :tabfirst<cr>
 noremap <leader>tl :tablast<cr>
 noremap <leader>tm :tabmove
 
+map <Leader>b :MiniBufExplorer<cr>
+
 " F2 toggles folding
 inoremap <F2> <C-O>za
 nnoremap <F2> za
