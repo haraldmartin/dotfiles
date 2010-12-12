@@ -178,6 +178,8 @@ map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 " Buffer navigation
 noremap <Leader>a :bprev<Return>
 noremap <Leader>s :bnext<Return>
+noremap <D-[> :bprev<return>
+noremap <D-]> :bnext<return>
 
 " Command T configuration
 noremap <leader>t :CommandT<Return>
