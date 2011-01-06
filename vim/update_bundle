@@ -33,6 +33,7 @@ git_bundles = %w[
   git://github.com/vim-scripts/taglist.vim.git
   git://github.com/vim-scripts/Color-Sampler-Pack.git
   git://github.com/fholgado/minibufexpl.vim.git
+  git://github.com/vim-scripts/ZenCoding.vim.git
 ]
 
 require 'fileutils'
