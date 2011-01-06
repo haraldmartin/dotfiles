@@ -1,5 +1,6 @@
-export EDITOR='mvim -f -c "au VimLeave * opendiff -a Terminal"'
-export GIT_EDITOR=$EDITOR
+export EDITOR='mvim'
+export VMAIL_VIM='mvim'
+export GIT_EDITOR='mvim -f -c "au VimLeave * opendiff -a Terminal"'
 
 # Set pbcopy to use UTF-8 by default
 # http://www.macosxhints.com/article.php?story=20081231012753422
