@@ -86,6 +86,7 @@ set laststatus=2                 " Show the status line all the time
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
+
 " colorscheme railscasts_hms
 color jellybeans+
 
@@ -131,15 +132,15 @@ vmap <D-S-Up> :m-2<CR>gv
 vmap <D-S-Down> :m'>+<CR>gv
 
 " Tab mappings.
-noremap <leader>tt :tabnew<cr>
-noremap <leader>te :tabedit
-noremap <leader>tc :tabclose<cr>
-noremap <leader>to :tabonly<cr>
-noremap <leader>tn :tabnext<cr>
-noremap <leader>tp :tabprevious<cr>
-noremap <leader>tf :tabfirst<cr>
-noremap <leader>tl :tablast<cr>
-noremap <leader>tm :tabmove
+" noremap <leader>tt :tabnew<cr>
+" noremap <leader>te :tabedit
+" noremap <leader>tc :tabclose<cr>
+" noremap <leader>to :tabonly<cr>
+" noremap <leader>tn :tabnext<cr>
+" noremap <leader>tp :tabprevious<cr>
+" noremap <leader>tf :tabfirst<cr>
+" noremap <leader>tl :tablast<cr>
+" noremap <leader>tm :tabmove
 
 map <Leader>b :MiniBufExplorer<cr>
 
@@ -400,4 +401,3 @@ call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
 call s:DefineCommand("e", "Edit")
-
