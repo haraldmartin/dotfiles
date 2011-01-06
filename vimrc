@@ -110,6 +110,8 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <leader><cr> o<esc>
 
+map <leader>c :ConqueTermSplit bash<cr>
+
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
