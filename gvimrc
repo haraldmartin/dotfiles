@@ -9,7 +9,7 @@ set guioptions-=T                 " Hide toolbar.
 
 set guioptions-=T                 "kill toolbar
 set guioptions-=m                 "kill menu
-" set guioptions-=r                 "kill right scrollbar
+set guioptions-=r                 "kill right scrollbar
 set guioptions-=l                 "kill left scrollbar
 set guioptions-=L                 "kill left scrollbar with multiple buffers
 
