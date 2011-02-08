@@ -84,7 +84,7 @@ set expandtab
 set laststatus=2                 " Show the status line all the time
 
 " Useful status information at bottom of screen
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set statusline=[%n]\ %<%.99F\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
 
 " colorscheme railscasts_hms
@@ -142,7 +142,7 @@ vmap <D-S-Down> :m'>+<CR>gv
 " noremap <leader>tl :tablast<cr>
 " noremap <leader>tm :tabmove
 
-map <Leader>b :MiniBufExplorer<cr>
+map <Leader>b :TMiniBufExplorer<cr>
 
 " F2 toggles folding
 inoremap <F2> <C-O>za
@@ -263,6 +263,8 @@ nnoremap <leader>v V`]
 
 " quickly open up my ~/.vimrc file in a vertically split window so I can add new things to it on the fly.
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
+nnoremap <leader>ct :CommandTFlush<CR>
 
 set whichwrap+=<,>,[,] 
 
@@ -401,3 +403,32 @@ call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
 call s:DefineCommand("e", "Edit")
+
+
+" <C-r> to trigger and also to close the scratch buffer.
+" TODO: <LocalLeader>r? Reuse split? Pluginize? Handle gets if possible?
+
+function! RubyRun()
+  redir => m
+  silent w ! ruby
+  redir END
+  new
+  put=m
+" Fix extraneous leading blank lines.
+  1,2d
+" Fix Ctrl+M linefeeds.
+  silent %! col -b
+  " TODO: Reuse split?
+  " Set a filetype so we can define a 'close' mapping with the 'run' mapping.
+  set ft=ruby-runner
+  " Make a scratch (temporary) buffer.
+  set buftype=nofile
+  set bufhidden=hide
+  setlocal noswapfile
+endfunction
+
+if has("autocmd") && has("gui_macvim")
+  au! FileType ruby map <buffer> <D-r> :call RubyRun()<CR>
+  au! FileType ruby-runner map <buffer> <D-r> ZZ
+endif
+
