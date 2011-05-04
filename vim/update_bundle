@@ -2,12 +2,9 @@
 # vim: ft=ruby
 
 # from: http://tammersaleh.com/posts/the-modern-vim-config-with-pathogen
-
 git_bundles = %w[
-  http://github.com/airblade/vim-rooter.git
   http://github.com/mileszs/ack.vim.git
   http://github.com/reinh/vim-makegreen.git
-  http://github.com/skammer/vim-css-color.git
   http://github.com/taxilian/nerdtree.git
   http://github.com/haraldmartin/vim-snipmate.git
   http://github.com/tpope/vim-fugitive.git
@@ -34,7 +31,19 @@ git_bundles = %w[
   git://github.com/vim-scripts/Color-Sampler-Pack.git
   git://github.com/fholgado/minibufexpl.vim.git
   git://github.com/vim-scripts/ZenCoding.vim.git
+  git://github.com/nathanaelkane/vim-indent-guides.git
+  git://github.com/flazz/vim-colorschemes.git
+  https://github.com/henrik/vim-ruby-runner.git
+  git://github.com/altercation/vim-colors-solarized.git
+  https://github.com/vim-scripts/JavaScript-Indent.git
+  git://github.com/kchmck/vim-coffee-script.git
+  git://github.com/dtyuan/vim-rspec.git
+  https://github.com/scrooloose/snipmate-snippets.git
 ]
+
+# http://github.com/airblade/vim-rooter.git
+# git://github.com/vim-scripts/TabBar.git
+# http://github.com/skammer/vim-css-color.git
 
 require 'fileutils'
 
