@@ -2,7 +2,7 @@
 " Copy to ~/.gvimrc or ~/_gvimrc.
 
 " set guifont=Menlo:h13           " Font family and font size.
-set guifont=Meslo\ LG\ S\ DZ:h13
+
 set antialias                     " MacVim: smooth fonts.
 set encoding=utf-8                " Use UTF-8 everywhere.
 set guioptions-=T                 " Hide toolbar.
@@ -17,6 +17,15 @@ set background=dark               " Background.
 set lines=45 columns=100          " Window dimensions.
 
 if has("gui_macvim")
+  let name=system('uname -n')
+  set guifont=Meslo\ LG\ S\ DZ:h12
+
+  if name == "Martins-MacBook-Air.local"
+    set guifont=M+\ 1m:h13
+  endif
+
+  set lines=45 columns=100          " Window dimensions.
+
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
 
