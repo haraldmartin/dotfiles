@@ -33,6 +33,10 @@ set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
 set showmatch
 
+set wildignore+='tmp/*'
+
+command! W :w
+
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>c :noh<cr>
 
@@ -78,7 +82,7 @@ set noswapfile
 " set directory=$HOME/.vim/tmp        " Keep swap files in one location
 " set backupdir=$HOME/.vim/tmp
 
-set tabstop=2 softtabstop=2 shiftwidth=2 
+set tabstop=2 softtabstop=2 shiftwidth=2
 set expandtab
 
 set laststatus=2                 " Show the status line all the time
@@ -96,7 +100,7 @@ let mapleader = ","
 nnoremap / /\v
 vnoremap / /\v
 
-" "makes j and k work the way you expect instead of working in some archaic 
+" "makes j and k work the way you expect instead of working in some archaic
 " “movement by file line instead of screen line” fashion."
 
 nnoremap <up> <nop>
@@ -111,7 +115,7 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <leader><cr> o<esc>
 
-map <leader>c :ConqueTermSplit bash<cr>
+" map <leader>c :ConqueTermSplit bash<cr>
 
 " Speed up viewport scrolling
 nnoremap <C-e> 3<C-e>
@@ -192,10 +196,11 @@ let g:CommandTMaxHeight=20
 map <Leader>z :ZoomWin<CR>
 
 " Ack/Quickfix windows
-map <Leader>q :cclose<CR>
+nmap <Leader>q :cclose<CR>
+nmap <leader>h :noh<cr>
 
 " CTags
-map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+" map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
 
 " Remember last location in file
 if has("autocmd")
@@ -203,6 +208,7 @@ if has("autocmd")
     \| exe "normal g'\"" | endif
 endif
 
+noremap <Leader>rk :Rake<CR>
 
 " Controversial...swap colon and semicolon for easier commands
 nnoremap ; :
@@ -211,9 +217,10 @@ vnoremap ; :
 " Rails Edit routes
 command! Rroutes :e config/routes.rb
 command! Rschema :e db/schema.rb
-noremap <leader>rm :Rmodel 
-noremap <leader>rc :Rcontroller 
-noremap <leader>rv :Rview 
+noremap <leader>rm :Rmodel
+noremap <leader>rc :Rcontroller
+noremap <leader>rv :Rview
+nnoremap <leader>r :w \| !rspec --no-color %<cr>
 
 " Automatic fold settings for specific files. Uncomment to use.
 autocmd FileType ruby setlocal foldmethod=syntax
@@ -250,15 +257,15 @@ noremap <leader>cc Ypkgccj
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " I use Ack a lot (described below), so I mapped a leader key for it:
-nnoremap <leader>f :Ack 
+nnoremap <leader>f :Ack
 
 "  work with HTML often, so I have ,ft mapped to a “fold tag” function:
 nnoremap <leader>ft Vatzfuu
 
-" This next mapping imitates TextMates Ctrl+Q function to re-hardwrap 
+" This next mapping imitates TextMates Ctrl+Q function to re-hardwrap
 nnoremap <leader>q gqip
 
-" I have a ,v mapping to reselect the text that was just pasted so I can 
+" I have a ,v mapping to reselect the text that was just pasted so I can
 " perform commands (like indentation) on it:
 nnoremap <leader>v V`]
 
@@ -267,7 +274,7 @@ nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 nnoremap <leader>ct :CommandTFlush<CR>
 
-set whichwrap+=<,>,[,] 
+set whichwrap+=<,>,[,]
 
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
@@ -278,13 +285,9 @@ command! LargeFont :set guifont=Menlo:h18
 command! SmallFont :set guifont=Menlo:h11
 
 if &t_Co > 2 || has("gui_runing")
-  " enable syntax highlighting
   syntax on
 endif
 
-" map fc <Esc>:call CleanClose(1)<cr>
-" map fq <Esc>:call CleanClose(0)
-" noremap <Leader>d :bd<Return>
 noremap <Leader>d <Esc>:call CleanClose(1)<CR>
 
 function! CleanClose(tosave)
@@ -305,12 +308,6 @@ function! CleanClose(tosave)
   exe "bd".todelbufNr
 endfunction
 
-
-" Project Tree
-" autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
-
 " Disable netrw's autocmd, since we're ALWAYS using NERDTree
 runtime plugin/netRwPlugin.vim
 augroup FileExplorer
@@ -318,118 +315,3 @@ augroup FileExplorer
 augroup END
 
 let g:NERDTreeHijackNetrw = 0
-
-" If the parameter is a directory, cd into it
-function s:CdIfDirectory(directory)
-  if isdirectory(a:directory)
-    call ChangeDirectory(a:directory)
-  endif
-endfunction
-
-" NERDTree utility function
-function s:UpdateNERDTree(stay)
-  if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-      NERDTree
-      if !a:stay
-        wincmd p
-      end
-    endif
-  endif
-endfunction
-
-" Utility functions to create file commands
-function s:CommandCabbr(abbreviation, expansion)
-  execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
-endfunction
-
-function s:FileCommand(name, ...)
-  if exists("a:1")
-    let funcname = a:1
-  else
-    let funcname = a:name
-  endif
-
-  execute 'command -nargs=1 -complete=file ' . a:name . ' :call ' . funcname . '(<f-args>)'
-endfunction
-
-function s:DefineCommand(name, destination)
-  call s:FileCommand(a:destination)
-  call s:CommandCabbr(a:name, a:destination)
-endfunction
-
-" Public NERDTree-aware versions of builtin functions
-function ChangeDirectory(dir, ...)
-  execute "cd " . a:dir
-  let stay = exists("a:1") ? a:1 : 1
-  call s:UpdateNERDTree(stay)
-endfunction
-
-function Touch(file)
-  execute "!touch " . a:file
-  call s:UpdateNERDTree(1)
-endfunction
-
-function Remove(file)
-  let current_path = expand("%")
-  let removed_path = fnamemodify(a:file, ":p")
-
-  if (current_path == removed_path) && (getbufvar("%", "&modified"))
-    echo "You are trying to remove the file you are editing. Please close the buffer first."
-  else
-    execute "!rm " . a:file
-  endif
-endfunction
-
-function Edit(file)
-  if exists("b:NERDTreeRoot")
-    wincmd p
-  endif
-
-  execute "e " . a:file
-
-ruby << RUBY
-  destination = File.expand_path(VIM.evaluate(%{system("dirname " . a:file)}))
-  pwd         = File.expand_path(Dir.pwd)
-  home        = pwd == File.expand_path("~")
-
-  if home || Regexp.new("^" + Regexp.escape(pwd)) !~ destination
-    VIM.command(%{call ChangeDirectory(system("dirname " . a:file), 0)})
-  end
-RUBY
-endfunction
-
-" Define the NERDTree-aware aliases
-call s:DefineCommand("cd", "ChangeDirectory")
-call s:DefineCommand("touch", "Touch")
-call s:DefineCommand("rm", "Remove")
-call s:DefineCommand("e", "Edit")
-
-
-" <C-r> to trigger and also to close the scratch buffer.
-" TODO: <LocalLeader>r? Reuse split? Pluginize? Handle gets if possible?
-
-function! RubyRun()
-  redir => m
-  silent w ! ruby
-  redir END
-  new
-  put=m
-" Fix extraneous leading blank lines.
-  1,2d
-" Fix Ctrl+M linefeeds.
-  silent %! col -b
-  " TODO: Reuse split?
-  " Set a filetype so we can define a 'close' mapping with the 'run' mapping.
-  set ft=ruby-runner
-  " Make a scratch (temporary) buffer.
-  set buftype=nofile
-  set bufhidden=hide
-  setlocal noswapfile
-endfunction
-
-if has("autocmd") && has("gui_macvim")
-  au! FileType ruby map <buffer> <D-r> :call RubyRun()<CR>
-  au! FileType ruby-runner map <buffer> <D-r> ZZ
-endif
-
