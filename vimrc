@@ -232,7 +232,8 @@ endif
 "   \   exe "normal! g`\"" |
 "   \ endif
 
-au FocusLost * :wa
+" au FocusLost * :wa
+au FocusLost silent! :wa
 
 " For the MakeGreen plugin and Ruby RSpec. Uncomment to use.
 " autocmd BufNewFile,BufRead *_spec.rb compiler rspec
