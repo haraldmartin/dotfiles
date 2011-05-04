@@ -3,6 +3,7 @@
 
 " set guifont=Menlo:h13           " Font family and font size.
 
+
 set antialias                     " MacVim: smooth fonts.
 set encoding=utf-8                " Use UTF-8 everywhere.
 set guioptions-=T                 " Hide toolbar.
@@ -14,7 +15,6 @@ set guioptions-=l                 "kill left scrollbar
 set guioptions-=L                 "kill left scrollbar with multiple buffers
 
 set background=dark               " Background.
-set lines=45 columns=100          " Window dimensions.
 
 if has("gui_macvim")
   let name=system('uname -n')
@@ -31,7 +31,14 @@ if has("gui_macvim")
 
   " Command-T for CommandT
   macmenu &File.New\ Tab key=<nop>
+
+  " Terminal.app shortcuts for tab navigation.
+  macmenu Window.Select\ Next\ Tab key=<D-S-}>
+  macmenu Window.Select\ Previous\ Tab key=<D-S-{>
+  macmenu &Edit.Special\ Characters\.\.\. key=<nop>
+
   map <D-t> :CommandT<CR>
+  map <D-C-t> :CommandTFlush<CR>CommandT<CR>
 
   " Command-Shift-F for Ack
   " macmenu Window.Toggle\ Full\ Screen\ Mode key=<nop>
