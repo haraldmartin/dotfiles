@@ -18,13 +18,13 @@ set background=dark               " Background.
 
 if has("gui_macvim")
   let name=system('uname -n')
-  set guifont=Meslo\ LG\ S\ DZ:h12
+  set guifont=Meslo\ LG\ S\ DZ:h13
 
   if name == "Martins-MacBook-Air.local"
     set guifont=M+\ 1m:h13
   endif
 
-  set lines=45 columns=100          " Window dimensions.
+  set lines=53 columns=120          " Window dimensions.
 
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
