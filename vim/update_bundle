@@ -5,7 +5,7 @@
 git_bundles = %w[
   http://github.com/mileszs/ack.vim.git
   http://github.com/reinh/vim-makegreen.git
-  http://github.com/taxilian/nerdtree.git
+  https://github.com/scrooloose/nerdtree.git
   http://github.com/haraldmartin/vim-snipmate.git
   http://github.com/tpope/vim-fugitive.git
   http://github.com/tpope/vim-git.git
@@ -25,11 +25,9 @@ git_bundles = %w[
   http://github.com/vim-scripts/tComment.git
   http://github.com/vim-scripts/Align.git
   git://github.com/vim-scripts/ZoomWin.git
-  git://github.com/ervandew/supertab.git
   git://github.com/Townk/vim-autoclose.git
   git://github.com/vim-scripts/taglist.vim.git
   git://github.com/vim-scripts/Color-Sampler-Pack.git
-  git://github.com/fholgado/minibufexpl.vim.git
   git://github.com/vim-scripts/ZenCoding.vim.git
   git://github.com/nathanaelkane/vim-indent-guides.git
   git://github.com/flazz/vim-colorschemes.git
@@ -39,8 +37,15 @@ git_bundles = %w[
   git://github.com/kchmck/vim-coffee-script.git
   git://github.com/dtyuan/vim-rspec.git
   https://github.com/scrooloose/snipmate-snippets.git
+  https://github.com/int3/vim-extradite.git
+  https://github.com/mislav/stylish.vim.git
+  https://github.com/tclem/vim-arduino.git
+  https://github.com/vim-scripts/Arduino-syntax-file.git
+  https://github.com/othree/html5-syntax.vim.git
 ]
 
+# git://github.com/ervandew/supertab.git
+# git://github.com/fholgado/minibufexpl.vim.git
 # http://github.com/airblade/vim-rooter.git
 # git://github.com/vim-scripts/TabBar.git
 # http://github.com/skammer/vim-css-color.git
