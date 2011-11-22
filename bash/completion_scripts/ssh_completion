@@ -16,7 +16,7 @@ class SSHCompletion
   end
   
   def hosts
-    File.read(File.expand_path('~/.ssh/config')).grep(/Host\ /).
+    File.read(File.expand_path('~/.ssh/config')).lines.grep(/Host\ /).
       map { |e| e.strip.match(/Host (.+)/)[1] }
   end
 end
