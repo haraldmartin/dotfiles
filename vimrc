@@ -26,19 +26,24 @@ set wildmode=list:longest         " Complete files like a shell.
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
 
-set number                      " Show line numbers.
+" set number                      " Show line numbers.
 set ruler                         " Show cursor position.
+
+" set nonumber foldcolumn=1
+" hi foldcolumn guibg=#151515 guifg=#151515
 
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
 set showmatch
 
-set wildignore+='tmp/*'
+" set wildignore+='tmp/*'
+set wildignore='tmp/*,*/tmp/*,*/tmp/**/*'
 
 command! W :w
 
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>c :noh<cr>
+nnoremap <leader>gc Gwrite \| Gcommit -m '
 
 " bind control-l to hashrocket
 imap <C-l> <Space>=><Space>"
@@ -63,7 +68,7 @@ set visualbell                    " No beeping.
 " Folding settings
 set foldmethod=indent
 set foldlevel=1
-set foldnestmax=2
+set foldnestmax=3
 
 " Move lines up and down
 " noremap <C-J> :m +1 <CR>
@@ -124,7 +129,7 @@ nnoremap <C-y> 3<C-y>
 " Searching
 set gdefault
 
-map <F4> :ls<CR>:buffer<space>
+map <F4> :ls<CR>:b<space>
 
 " In visual mode, indent and keep selection
 vmap > >gv
@@ -146,7 +151,7 @@ vmap <D-S-Down> :m'>+<CR>gv
 " noremap <leader>tl :tablast<cr>
 " noremap <leader>tm :tabmove
 
-map <Leader>b :TMiniBufExplorer<cr>
+" map <Leader>b :TMiniBufExplorer<cr>
 
 " F2 toggles folding
 inoremap <F2> <C-O>za
@@ -174,6 +179,8 @@ nmap <leader><up>     :leftabove  new<CR>
 nmap <leader><down>   :rightbelow new<CR>
 
 
+nmap <leader>eh :'<,'>s/\v\</\&lt;/ | execute "normal gv" | '<,'>s/\v\>/&gt;/<CR>
+
 " Edit shortcuts
 " http://vimcasts.org/episodes/the-edit-command/
 map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -191,6 +198,8 @@ noremap <D-]> :bnext<return>
 " Command T configuration
 noremap <leader>t :CommandT<Return>
 let g:CommandTMaxHeight=20
+
+vmap <leader>eh :s/\v\</\&lt;/ <CR> :execute "normal" "gv"<CR> :s/\v\>/\&gt;/<CR> :noh<CR>
 
 " ZoomWin configuration
 map <Leader>z :ZoomWin<CR>
@@ -240,7 +249,9 @@ endif
 "   \ endif
 
 " au FocusLost * :wa
-au FocusLost silent! :wa
+" au FocusLost silent! :wa
+autocmd BufLeave,FocusLost * silent! wall
+" autocmd BufLeave,FocusLost silent! wall
 
 " For the MakeGreen plugin and Ruby RSpec. Uncomment to use.
 " autocmd BufNewFile,BufRead *_spec.rb compiler rspec
