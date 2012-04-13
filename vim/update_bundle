@@ -3,62 +3,67 @@
 
 # from: http://tammersaleh.com/posts/the-modern-vim-config-with-pathogen
 git_bundles = %w[
-  http://github.com/mileszs/ack.vim.git
-  http://github.com/reinh/vim-makegreen.git
-  https://github.com/scrooloose/nerdtree.git
-  http://github.com/haraldmartin/vim-snipmate.git
-  http://github.com/tpope/vim-fugitive.git
-  http://github.com/tpope/vim-git.git
-  http://github.com/tpope/vim-haml.git
-  http://github.com/tpope/vim-markdown.git
-  http://github.com/tpope/vim-ragtag.git
-  http://github.com/tpope/vim-rails.git
-  http://github.com/tpope/vim-speeddating.git
-  http://github.com/tpope/vim-surround.git
-  http://github.com/tpope/vim-unimpaired.git
-  http://github.com/vim-scripts/ColorX.git
-  http://github.com/vim-scripts/Command-T.git
-  http://github.com/vim-scripts/Gist.vim.git
-  http://github.com/vim-scripts/camelcasemotion.git
-  http://github.com/vim-scripts/endwise.vim.git
-  http://github.com/vim-scripts/hexHighlight.vim.git
-  http://github.com/vim-scripts/tComment.git
-  http://github.com/vim-scripts/Align.git
-  git://github.com/vim-scripts/ZoomWin.git
-  git://github.com/Townk/vim-autoclose.git
-  git://github.com/vim-scripts/taglist.vim.git
-  git://github.com/vim-scripts/Color-Sampler-Pack.git
-  git://github.com/vim-scripts/ZenCoding.vim.git
-  git://github.com/nathanaelkane/vim-indent-guides.git
-  git://github.com/flazz/vim-colorschemes.git
-  https://github.com/henrik/vim-ruby-runner.git
-  git://github.com/altercation/vim-colors-solarized.git
-  https://github.com/vim-scripts/JavaScript-Indent.git
-  git://github.com/kchmck/vim-coffee-script.git
-  git://github.com/dtyuan/vim-rspec.git
-  https://github.com/scrooloose/snipmate-snippets.git
-  https://github.com/int3/vim-extradite.git
-  https://github.com/mislav/stylish.vim.git
-  https://github.com/tclem/vim-arduino.git
-  https://github.com/vim-scripts/Arduino-syntax-file.git
-  https://github.com/othree/html5-syntax.vim.git
+  chriskempson/vim-tomorrow-theme.git
+  Townk/vim-autoclose.git
+  dtyuan/vim-rspec.git
+  haraldmartin/vim-snipmate.git
+  henrik/vim-ruby-runner.git
+  kchmck/vim-coffee-script.git
+  mileszs/ack.vim.git
+  othree/html5-syntax.vim.git
+  scrooloose/snipmate-snippets.git
+  tpope/vim-bundler.git
+  tpope/vim-bundler.git
+  tpope/vim-fugitive.git
+  tpope/vim-git.git
+  tpope/vim-haml.git
+  tpope/vim-markdown.git
+  tpope/vim-ragtag.git
+  tpope/vim-rails.git
+  tpope/vim-surround.git
+  tpope/vim-unimpaired.git
+  vim-scripts/Align.git
+  vim-scripts/Arduino-syntax-file.git
+  vim-scripts/ColorX.git
+  vim-scripts/Command-T.git
+  vim-scripts/Gist.vim.git
+  vim-scripts/JavaScript-Indent.git
+  vim-scripts/camelcasemotion.git
+  vim-scripts/endwise.vim.git
+  vim-scripts/tComment.git
 ]
 
-# git://github.com/ervandew/supertab.git
-# git://github.com/fholgado/minibufexpl.vim.git
-# http://github.com/airblade/vim-rooter.git
-# git://github.com/vim-scripts/TabBar.git
-# http://github.com/skammer/vim-css-color.git
+# https://github.com/tclem/vim-arduino.git
+# git://github.com/altercation/vim-colors-solarized.git
+# git://github.com/vim-scripts/Color-Sampler-Pack.git
+# https://github.com/tpope/vim-speeddating.git
+# git://github.com/flazz/vim-colorschemes.git
+
 
 require 'fileutils'
 
 bundle_dir = File.expand_path('../bundle/', __FILE__)
 
+# Found unlisted bundles (bundles not on disk will the script checkout)
+bundles_listed = git_bundles.map { |url| url.split('/').last.sub('.git', '')}
+bundles_on_disk = Dir["#{bundle_dir}/*"].map { |path| File.basename(path) }
+bundles_unlisted = bundles_on_disk - bundles_listed
+
+if bundles_unlisted.any?
+  puts 
+  puts "*** Some bundles found on disk but not on file ***"
+  bundles_unlisted.each do |bundle|
+    url = File.read("#{bundle_dir}/#{bundle}/.git/config").match(/url = (.+)$/)[1]
+    puts "#{bundle} (#{url})"
+  end
+  puts
+end
+
 git_bundles.each do |url|
   dirname = File.basename(url).sub(/\.git$/, '')
   puts "* Unpacking #{url} into #{dirname}"
   dir = File.join(bundle_dir, dirname)
-  `cd #{dir} 2>/dev/null && git pull || git clone #{url} #{dir}`
+  `cd #{dir} 2>/dev/null && git pull || git clone https://github.com/#{url} #{dir}`
 end
 
 puts "* Updating to latest pathogen"
