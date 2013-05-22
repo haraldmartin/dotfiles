@@ -52,7 +52,7 @@ alias reload='source ~/.bash_profile'
 alias purl='echo `pbpaste`; curl -O --location "`pbpaste`"'
 
 alias apachectl="sudo apachectl"
-alias flushdns='dscacheutil -flushcache'
+alias flushdns='sudo killall -HUP mDNSResponder'
 alias xhr="curl -H 'Accept:text/javascript'"
 alias flash_log='tail -f ~/Library/Preferences/Macromedia/Flash\ Player/logs/flashlog.txt'
 alias error_log='tail -f /private/var/log/apache2/error_log'
