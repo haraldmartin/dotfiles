@@ -1,19 +1,23 @@
 #!/usr/bin/env ruby
 # vim: ft=ruby
 
-# from: http://tammersaleh.com/posts/the-modern-vim-config-with-pathogen
 git_bundles = %w[
-  chriskempson/vim-tomorrow-theme.git
+  Lokaltog/vim-powerline.git
   Townk/vim-autoclose.git
+  airblade/vim-gitgutter
+  chriskempson/vim-tomorrow-theme.git
   dtyuan/vim-rspec.git
+  groenewege/vim-less.git
   haraldmartin/vim-snipmate.git
   henrik/vim-ruby-runner.git
   kchmck/vim-coffee-script.git
+  kien/ctrlp.vim
   mileszs/ack.vim.git
   othree/html5-syntax.vim.git
   scrooloose/snipmate-snippets.git
+  sjl/vitality.vim.git
   tpope/vim-bundler.git
-  tpope/vim-bundler.git
+  tpope/vim-dispatch
   tpope/vim-fugitive.git
   tpope/vim-git.git
   tpope/vim-haml.git
@@ -22,31 +26,25 @@ git_bundles = %w[
   tpope/vim-rails.git
   tpope/vim-surround.git
   tpope/vim-unimpaired.git
+  vim-ruby/vim-ruby
   vim-scripts/Align.git
   vim-scripts/Arduino-syntax-file.git
   vim-scripts/ColorX.git
-  vim-scripts/Command-T.git
   vim-scripts/Gist.vim.git
   vim-scripts/JavaScript-Indent.git
   vim-scripts/camelcasemotion.git
   vim-scripts/endwise.vim.git
   vim-scripts/tComment.git
+  altercation/vim-colors-solarized
 ]
-
-# https://github.com/tclem/vim-arduino.git
-# git://github.com/altercation/vim-colors-solarized.git
-# git://github.com/vim-scripts/Color-Sampler-Pack.git
-# https://github.com/tpope/vim-speeddating.git
-# git://github.com/flazz/vim-colorschemes.git
-
 
 require 'fileutils'
 
 bundle_dir = File.expand_path('../bundle/', __FILE__)
 
-# Found unlisted bundles (bundles not on disk will the script checkout)
-bundles_listed = git_bundles.map { |url| url.split('/').last.sub('.git', '')}
-bundles_on_disk = Dir["#{bundle_dir}/*"].map { |path| File.basename(path) }
+# Find unlisted bundles (bundles not on disk will the script checkout)
+bundles_listed   = git_bundles.map { |url| url.split('/').last.sub('.git', '')}.map &:downcase
+bundles_on_disk  = Dir["#{bundle_dir}/*"].map { |path| File.basename(path) }.map &:downcase
 bundles_unlisted = bundles_on_disk - bundles_listed
 
 if bundles_unlisted.any?
