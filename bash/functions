@@ -18,12 +18,12 @@ function titled() {
 }
 
 function psgrep() {
-	local name=$1
-	ps auxww | grep -i --color=never "[${name:0:1}]${name:1}"
+  local name=$1
+  ps auxww | grep -i --color=never "[${name:0:1}]${name:1}"
 }
 
 function pid() {
-  psgrep "$1" | awk '{print $2}'	
+  psgrep "$1" | awk '{print $2}'
 }
 
 function killgrep() {
@@ -71,13 +71,6 @@ function httpdump {
 	interface="${1:-en1}"
 	sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
 }
- 
-function t {
-  command="cd '`pwd`'"
-  osascript -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down' \
-            -e "tell application \"Terminal\" to do script with command \"$command\" in last tab of window 1" \
-            &>/dev/null
-}
 
 function isreg {
   whois $1 | grep -q 'No match' && echo "No" || echo "Yes"
@@ -99,7 +92,7 @@ function _growl_prompt_command {
   PREV_PROMPT_COMMAND=
   PROMPT_MEMO=
 }
- 
+
 function growldone {
   PREV_PROMPT_COMMAND=$PROMPT_COMMAND
   PROMPT_COMMAND=_growl_prompt_command
@@ -114,8 +107,8 @@ function growldone {
 #
 #     henrik@Nyx /myproject$ migg add_fooed_at_to_bars fooed_at:datetime
 #
-# http://github.com/henrik/dotfiles/commit/92b18641d825ed5e5ad503132549b1ea6c95cb2c
-# 
+# http://github.com/henrik/dotfiles/commit/
+#
 
 function migg {
   if [[ -x script/generate ]]; then
@@ -190,14 +183,14 @@ function rp { cd "$*"; }
 #
 # Make port 80 "real life" speeds
 # You can also use Mongrel ports.
-# 
+#
 function slow_port {
   # Set the port variable if no port inputted. Defaulted to 80 (for Passenger).
   if [ -z "$1" ]
   then port=80
   else port=$1
   fi
-  
+
   # Slow the ports.
   sudo ipfw pipe 1 config bw 15KByte/s
   sudo ipfw add 1 pipe 1 src-port $port
