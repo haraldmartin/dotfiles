@@ -48,29 +48,23 @@ function set_prompt() {
 set_prompt
 
 function set_ls_colors() {
-	#export TERM=xterm-color
-	#export CLICOLOR=1
-	#export LSCOLORS=fxfxcxdxbxegedabagacad #pink dirs
-	#export LSCOLORS=dxfxcxdxbxegedabagacad #yellow dirs
-	
-	# http://www.macosxhints.com/article.php?story=20031025162727485
-	#	a     black 
-	#	b     red 
-	#	c     green 
-	#	d     brown 
-	#	e     blue 
-	#	f     magenta 
-	#	g     cyan 
-	#	h     light grey 
-	#	A     bold black, usually shows up as dark grey 
-	#	B     bold red 
-	#	C     bold green 
-	#	D     bold brown, usually shows up as yellow 
-	#	E     bold blue 
-	#	F     bold magenta 
-	#	G     bold cyan 
-	#	H     bold light grey; looks like bright white 
-	#	x     default foreground or background 
+	#	a     black
+	#	b     red
+	#	c     green
+	#	d     brown
+	#	e     blue
+	#	f     magenta
+	#	g     cyan
+	#	h     light grey
+	#	A     bold black, usually shows up as dark grey
+	#	B     bold red
+	#	C     bold green
+	#	D     bold brown, usually shows up as yellow
+	#	E     bold blue
+	#	F     bold magenta
+	#	G     bold cyan
+	#	H     bold light grey; looks like bright white
+	#	x     default foreground or background
 	local dir=fx
 	local symlink=xf
 	local socket=cx
@@ -87,27 +81,33 @@ function set_ls_colors() {
 }
 
 # http://pseudogreen.org/blog/set_tab_names_in_leopard_terminal.html
+function short_pwd() {
+  local pwd_length=$1
+  local cur_pwd=$(echo $(pwd) | sed -e "s,^$HOME,~,")
+
+  if [ $(echo -n $cur_pwd | wc -c | tr -d " ") -gt $pwd_length ]; then
+    echo "…$(echo $cur_pwd | sed -e "s/.*\(.\{$pwd_length\}\)/\1/")"
+  else
+    echo $cur_pwd
+  fi
+}
+
 function set_window_and_tab_title() {
     local path=$1
-    local title="${path##*/}"
-    
-    # include the parent dir if we're in a src or lib dir since that's proably a little more interesting
-    if [[ "$title" = "src" ]]; then
-      title="${1%%/src}"
-      title="${title##*/}/src"
-    fi
-    if [[ "$title" = "lib" ]]; then
-      title="${1%%/lib}"
-      title="${title##*/}/lib"
-    fi
-    [[ -z "$title" ]] && title="root"
+
+    # local current=${path##*/}
+    # local parent=${PWD%%/$current}
+    # local title="${parent##*/}/$current"
+
+    local title=$(short_pwd 20)
+
+    [[ -z "$title" || "$title" = '/' ]] && title="root"
     [[ "$path" == $HOME ]] && title="~"
-    
+
     echo -ne "\033]0;${title}\007"
 }
 
 function _prompt_command() {
-  shortPWD="$(short_pwd)"
   set_window_and_tab_title "${PWD}"
 }
 
