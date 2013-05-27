@@ -19,9 +19,25 @@ debian/*.debhelper
 debian/*.substvars
 debian/files
  
-*.xcodeproj/*.pbxuser
-*.xcodeproj/*.perspective*
-*.xcodeproj/*.mode1*
+# xcode noise
+build
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.xcuserdatad
+
+# old skool
+.svn
+
+# osx noise
+.DS_Store
+profile
+
+Support/NewBenchmark/build/
+Support/build/
 
 *.swp
 *.swm
