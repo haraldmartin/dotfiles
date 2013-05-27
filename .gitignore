@@ -2,3 +2,4 @@ gitconfig
 vim/bundle/*
 vim/backup
 vim/bundle-disabled
+.netrwhist
