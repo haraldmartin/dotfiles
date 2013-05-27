@@ -1,2 +1,4 @@
 gitconfig
 vim/bundle/*
+vim/backup
+vim/bundles-disabled
