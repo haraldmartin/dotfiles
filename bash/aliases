@@ -1,7 +1,18 @@
 # editor
-alias mate="mate -r"
-alias e='$EDITOR'
-alias ed='$EDITOR .'
+# alias e='$EDITOR'
+# alias vim='title "Vim - ${PWD##*/}" && vim'
+
+function e() {
+  p="$1"
+  if [[ -d $p ]]; then
+    shift
+    cd "$p" && vim $*
+  else
+    vim $*
+  fi
+}
+
+alias v='view'
 
 # ls
 alias ls='ls -hFG'
