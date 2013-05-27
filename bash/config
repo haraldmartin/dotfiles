@@ -6,16 +6,21 @@ export LC_CTYPE=en_US.UTF-8
 # misc
 export INPUTRC=~/.inputrc
 
-function short_pwd() {
-  local pwd_length=${PROMPT_LEN-40}
-  local cur_pwd=$(echo $(pwd) | sed -e "s,^$HOME,~,")
-  if [ $(echo -n $cur_pwd | wc -c | tr -d " ") -gt $pwd_length ]; then
-    echo "...$(echo $cur_pwd | sed -e "s/.*\(.\{$pwd_length\}\)/\1/")"
-  else
-    echo $cur_pwd
-  fi
+[[ -f /usr/local/Cellar/git/latest/etc/bash_completion.d/git-prompt.sh ]] && \
+  source /usr/local/Cellar/git/latest/etc/bash_completion.d/git-prompt.sh
+
+function __git_prompt {
+  GIT_PS1_SHOWDIRTYSTATE=1
+  __git_ps1 "(%s)"
+  # | sed 's/ \([+*]\{1,\}\)$/\1/'
 }
 
+# Only show username@server over SSH.
+function __name_and_server {
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo "`whoami`@`hostname -s` "
+  fi
+}
 
 # prompt
 # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
@@ -33,16 +38,18 @@ function set_prompt() {
   local no_color="\[\033[0m\]"
   local cyan="\[\033[0;36m\]"
   local light_cyan="\[\033[1;36m\]"
-  
-  export GIT_PS1_SHOWDIRTYSTATE=1
-  
-  if [[ `uname -n` == 'my-domain' ]]; then
+
+  # if [[ `uname -n` == 'my-domain' ]]; then
     # export PS1="\n${yellow}[\u] ${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-    export PS1="\n${yellow}[\u] ${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-  else
+    # export PS1="\n${yellow}[\u] ${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
+  # else
     # export PS1="\n${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-    export PS1="\n${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-  fi
+    # export PS1="\n${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
+  # fi
+
+  # reset
+  local RESET="\[\033[0;37m\]"
+  export PS1="\n${gray}\$(__name_and_server)${blue}\w ${yellow}\$(__git_prompt)\n${green}$ ${RESET}"
 }
 
 set_prompt
