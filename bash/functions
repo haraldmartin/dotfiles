@@ -3,9 +3,9 @@ function mkcd() {
     cd "$1"
 }
 
-function title() { 
+function title() {
   unset PROMPT_COMMAND
-  echo -ne "\033]0;$1\007"
+  echo -ne "\033]0;$*\007"
 }
 
 function titled() {
