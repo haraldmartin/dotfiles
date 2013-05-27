@@ -125,7 +125,7 @@ function migg {
 #     open ~/Code/iPhone/MyApp/MyApp.xcodeproj
 #
 function xc {
-  open `ls | grep .xcodeproj`
+  open `ls -d *.xcworkspace *.xcodeproj | sort -r | head -1`
 }
 
 # http://www.leancrew.com/all-this/2008/02/leopard-screen-sharing-over-the-internet/
