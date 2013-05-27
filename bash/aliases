@@ -43,24 +43,30 @@ alias cl='clear; l'
 alias cls='clear; ls'
 
 # grep
-alias g='grep'
 alias grep='grep --color=ALWAYS'
 alias egrep='egrep --color=ALWAYS'
 
 # misc
+alias json='json -i'
 alias s='sudo'
 alias o='open'
 alias md='mkdir -p'
 alias disable-auto-prompt='unset PROMPT_COMMAND'
 alias transmit='open -a Transmit'
 alias ql='qlmanage -p 2>/dev/null'
+alias ssh='title $1 && tabcolor && ssh $*'
 alias myd='ssh myd'
 alias reveal='open -R'
+alias prettify-json='python -mjson.tool'
 
-alias hosts='mate /etc/hosts'
+alias hosts="sudo vim /etc/hosts"
 alias reload='source ~/.bash_profile'
 
 alias purl='echo `pbpaste`; curl -O --location "`pbpaste`"'
+alias GET='curl -X GET'
+alias POST='curl -X POST'
+alias PUT='curl -X PUT'
+alias PATCH='curl -X PATCH'
 
 alias apachectl="sudo apachectl"
 alias flushdns='sudo killall -HUP mDNSResponder'
@@ -71,28 +77,35 @@ alias error_log='tail -f /private/var/log/apache2/error_log'
 alias hide-file="setfile -a V"
 alias show-file="setfile -a v"
 
-alias ts="terminitor start"
-
 # rails
 alias r='rails'
-alias mig='rake db:migrate db:test:clone'
-alias restart='touch tmp/restart.txt' # for passenger
+alias mig='rake db:migrate db:test:prepare'
+alias restart='touch tmp/restart.txt && echo touched tmp/restart.txt' # for passenger and pow
 
-# svn
-alias sup='svn update'
-alias sst='svn status -u'
-alias sd='svn diff | colordiff'
+# ruby
+alias rr="rbenv rehash"
+
+# bundler
+alias be='bundle exec'
+alias bi='bundle install'
+alias bu='bundle update'
 
 # git
+alias g='git'
+complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \ || complete -o default -o nospace -F _git g
+
 alias gst='git status'
 alias gl='git pull'
 alias gp='git push'
 alias gd='git diff'
+alias gds='git diff --cached'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gun='git status | grep unmerged'
+alias gr='git rebase'
+alias gm='git merge'
 
 # dates
 alias getdt="$(date '+%Y-%m-%d %H:%M:%S')"
@@ -100,3 +113,6 @@ alias getdtf="echo \"$(date '+%Y-%m-%d-%H.%M.%S')\""
 
 # commands starting with % for pasting from web
 alias %=' '
+
+# postgres
+alias pg.start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
