@@ -174,8 +174,7 @@ function sl {
 }
 
 # changing directory to code project
-function p  { cd "$HOME/Projects/$*"; }
-function rp { cd "$*"; }
+function p  { cd "'$HOME/Projects/$*'"; }
 
 
 #
