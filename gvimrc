@@ -17,13 +17,8 @@ set guioptions-=L                 "kill left scrollbar with multiple buffers
 set background=dark               " Background.
 
 if has("gui_macvim")
-  let name=system('uname -n')
-  set guifont=Meslo\ LG\ S\ DZ:h13
-
-  if name == "Martins-MacBook-Air.local"
-    set guifont=M+\ 1m:h13
-  endif
-
+  set guifont=Menlo\ LG\ S\ DZ:h13
+  set showtabline=1
   set lines=53 columns=120          " Window dimensions.
 
   " Fullscreen takes up entire screen
