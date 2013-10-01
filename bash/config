@@ -106,7 +106,7 @@ function set_window_and_tab_title() {
     # local parent=${PWD%%/$current}
     # local title="${parent##*/}/$current"
 
-    local title=$(short_pwd 20)
+    local title=$(short_pwd 15)
 
     [[ -z "$title" || "$title" = '/' ]] && title="root"
     [[ "$path" == $HOME ]] && title="~"
