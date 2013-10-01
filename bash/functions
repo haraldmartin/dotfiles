@@ -46,9 +46,12 @@ function imgdim() {
     |awk '/pixelWidth/  { printf("width: %dpx; ",  $2) }
           /pixelHeight/ { printf("height: %dpx; ", $2) }'
   else
-    sips -g pixelWidth -g pixelHeight "$1" \
-    |awk '/pixelWidth/  { printf("%d X ",  $2) }
-          /pixelHeight/ { printf("%d", $2) }'
+    for file in $*; do
+      echo $file
+      sips -g pixelWidth -g pixelHeight "$file" | \
+        awk '/pixelWidth/  { printf("%d X ",  $2) }
+             /pixelHeight/ { printf("%d\n", $2) }'
+    done
   fi
 }
 
