@@ -244,3 +244,7 @@ function her {
 function herbackup {
   heroku pgbackups:capture -a loopcam
 }
+
+function ql {
+  [[ -f $1 ]] && qlmanage -p $1 || echo "Quick Look: File $1 does not exist"
+}
