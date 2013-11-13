@@ -11,7 +11,7 @@ export INPUTRC=~/.inputrc
 
 function __git_prompt {
   GIT_PS1_SHOWDIRTYSTATE=1
-  __git_ps1 "(%s)"
+  __git_ps1 "@ %s"
   # | sed 's/ \([+*]\{1,\}\)$/\1/'
 }
 
@@ -38,53 +38,45 @@ function set_prompt() {
   local no_color="\[\033[0m\]"
   local cyan="\[\033[0;36m\]"
   local light_cyan="\[\033[1;36m\]"
+  local reset="\[\033[0;37m\]"
 
-  # if [[ `uname -n` == 'my-domain' ]]; then
-    # export PS1="\n${yellow}[\u] ${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-    # export PS1="\n${yellow}[\u] ${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-  # else
-    # export PS1="\n${blue}\${shortPWD}${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-    # export PS1="\n${blue}\w${yellow}\$(__git_ps1)\n${green}❯ ${no_color}"
-  # fi
-
-  # reset
-  local RESET="\[\033[0;37m\]"
-  export PS1="\n${gray}\$(__name_and_server)${blue}\w ${yellow}\$(__git_prompt)\n${green}$ ${RESET}"
+  # export PS1="\n${gray}\$(__name_and_server)${blue}\w ${yellow}\$(__git_prompt)${cyan}${has_background_jobs:+ ● $yellow\j}\n${green}$ ${reset}"
+  export PS1="\n${gray}\$(__name_and_server)${blue}\w ${yellow}\$(__git_prompt)${cyan}${has_background_jobs:+ (\j)}\n${green}$ ${reset}"
 }
 
 set_prompt
 
 function set_ls_colors() {
-	#	a     black
-	#	b     red
-	#	c     green
-	#	d     brown
-	#	e     blue
-	#	f     magenta
-	#	g     cyan
-	#	h     light grey
-	#	A     bold black, usually shows up as dark grey
-	#	B     bold red
-	#	C     bold green
-	#	D     bold brown, usually shows up as yellow
-	#	E     bold blue
-	#	F     bold magenta
-	#	G     bold cyan
-	#	H     bold light grey; looks like bright white
-	#	x     default foreground or background
-	local dir=fx
-	local symlink=xf
-	local socket=cx
-	local pipe=dx
-	local exec=bx
-	local block=eg
-	local charspec=ed
-	local execsetguid1=ab
-	local execsetguid2=ag
-	local dir_sticky=ac
-	local dir_nosticky=ad
+  #	a     black
+  #	b     red
+  #	c     green
+  #	d     brown
+  #	e     blue
+  #	f     magenta
+  #	g     cyan
+  #	h     light grey
+  #	A     bold black, usually shows up as dark grey
+  #	B     bold red
+  #	C     bold green
+  #	D     bold brown, usually shows up as yellow
+  #	E     bold blue
+  #	F     bold magenta
+  #	G     bold cyan
+  #	H     bold light grey; looks like bright white
+  #	x     default foreground or background
+  local dir=fx
+  local symlink=xf
+  local socket=cx
+  local pipe=dx
+  local exec=bx
+  local block=eg
+  local charspec=ed
+  local execsetguid1=ab
+  local execsetguid2=ag
+  local dir_sticky=ac
+  local dir_nosticky=ad
 
-	export LSCOLORS=$dir$symlink$socket$pipe$exec$block$charspec$execsetguid1$execsetguid2$dir_sticky$dir_nosticky
+  export LSCOLORS=$dir$symlink$socket$pipe$exec$block$charspec$execsetguid1$execsetguid2$dir_sticky$dir_nosticky
 }
 
 # http://pseudogreen.org/blog/set_tab_names_in_leopard_terminal.html
@@ -115,6 +107,8 @@ function set_window_and_tab_title() {
 }
 
 function _prompt_command() {
+  has_background_jobs=$(jobs -p)
+  set_prompt
   set_window_and_tab_title "${PWD}"
 }
 
