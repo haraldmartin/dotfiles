@@ -19,7 +19,8 @@ set encoding=utf-8
 syntax on
 set background=dark                   " Some plugins/themes need this
 " color Tomorrow-Night
-color jellybeans+
+" color jellybeans+
+color Spacedust
 
 set showcmd                           " Display incomplete commands.
 set showmode                          " Display the mode you're in.
