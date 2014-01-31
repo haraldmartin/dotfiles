@@ -8,3 +8,4 @@ source ~/.bash/config
 source `brew --prefix`/etc/grc.bashrc
 
 [[ -e $HOME/.rbenv ]] && eval "$(rbenv init -)"
+eval "$(direnv hook bash)"
