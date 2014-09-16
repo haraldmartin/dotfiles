@@ -36,6 +36,10 @@ git_bundles = %w[
   vim-scripts/endwise.vim.git
   vim-scripts/tComment.git
   altercation/vim-colors-solarized
+  chriskempson/base16-vim
+  scrooloose/nerdtree
+  toyamarinyon/vim-swift
+  wavded/vim-stylus
 ]
 
 require 'fileutils'
