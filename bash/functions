@@ -75,50 +75,8 @@ function httpdump {
 	sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"
 }
 
-function isreg {
-  whois $1 | grep -q 'No match' && echo "No" || echo "Yes"
-}
-
-function vpsstats {
-  ssh myd sysinfo
-}
-
 function pman {
   man -t "${1}" | open -f -a /Applications/Preview.app/
-}
-
-function _growl_prompt_command {
-  local laststatus=$?
-  eval $PREV_PROMPT_COMMAND
-  growlnotify -n Shell -m "$PROMPT_MEMO exited with $laststatus" Shell
-  PROMPT_COMMAND=$PREV_PROMPT_COMMAND
-  PREV_PROMPT_COMMAND=
-  PROMPT_MEMO=
-}
-
-function growldone {
-  PREV_PROMPT_COMMAND=$PROMPT_COMMAND
-  PROMPT_COMMAND=_growl_prompt_command
-  if [ $# -gt 0 ]; then
-	  PROMPT_MEMO=$@
-  else
-	  PROMPT_MEMO=Command
-  fi
-}
-
-# Generate a Ruby on Rails migration, then open the generated file.
-#
-#     henrik@Nyx /myproject$ migg add_fooed_at_to_bars fooed_at:datetime
-#
-# http://github.com/henrik/dotfiles/commit/
-#
-
-function migg {
-  if [[ -x script/generate ]]; then
-    script/generate migration $@ | ruby -e 'x = ARGF.read; puts x; path = x[/create\s+(.+)/, 1]; system("open", path)'
-  else
-    rails generate migration $@ | ruby -e 'x = ARGF.read; puts x; path = x[/create\s+(.+)/, 1]; system("open", path)'
-  fi
 }
 
 # Open the .xcodeproj file from the working directory (typically in Xcode).
@@ -144,49 +102,9 @@ function vpssocks {
   ssh -ND 9999 myd
 }
 
-# Rails
-function ss {
-  title "Server"
-  if [ -e script/rails ]; then
-    script/rails server $@
-  elif [ -e script/server ]; then
-    script/server $@
-  else
-    rails server $@
-  fi
-}
-
-function sc {
-  title "Console"
-  if [ -e script/rails ]; then
-    script/rails console $@
-  elif [ -e script/console ]; then
-    script/console $@
-  else
-    rails console $@
-  fi
-}
-
-function sg {
-  if [ -e script/rails ]; then
-    script/rails generate $@
-  elif [ -e script/generate ]; then
-    script/generate $@
-  else
-    rails generate $@
-  fi
-}
-
-function sl {
-  title "Log"
-  tail -f log/${1:-development}.log
-}
-
 # changing directory to code project
 function p  { cd "$HOME/Projects/$*"; }
 
-
-#
 # http://zachinglis.com/2009/make-your-rails-development-environment-slower-easily
 #
 # Make port 80 "real life" speeds
@@ -209,46 +127,6 @@ function slow_port {
 function unslow_port {
   sudo ipfw delete 1
   echo "Port succesfully un-slowed."
-}
-
-function spider4chan {
-  wget -P pics -H -nd -r -Dimages.4chan.org -A '.jpg,.jpeg,.png,.gif,' -erobots=off $1
-}
-
-function tabcolorrgb {
-  r=$1
-  g=$2
-  b=$3
-  echo -ne "\033]6;1;bg;red;brightness;$r\a\033]6;1;bg;green;brightness;$g\a\033]6;1;bg;blue;brightness;$b\a"
-}
-
-function tabcolor {
-  rand=$((RANDOM%4))
-
-  if [[ "$rand" == "0" ]]; then
-    r=102; g=137; b=157; # blue
-
-  elif [[ "$rand" == "1" ]]; then
-    r=82;  g=124; b=119; # cyan
-
-  elif [[ "$rand" == "2" ]]; then
-    r=200; g=153; b=92;  # yellow
-
-  elif [[ "$rand" == "3" ]]; then
-    r=145; g=150; b=82;  # green
-  fi
-
-  echo -ne "\033]6;1;bg;red;brightness;$r\a\033]6;1;bg;green;brightness;$g\a\033]6;1;bg;blue;brightness;$b\a"
-}
-
-function her {
-  title "heroku $*"
-  tabcolorrgb 122 119 139
-  heroku $*
-}
-
-function herbackup {
-  heroku pgbackups:capture -a loopcam
 }
 
 function ql {
