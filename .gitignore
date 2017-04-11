@@ -5,3 +5,5 @@ vim/bundle-disabled
 .netrwhist
 Library/Application Support/Tunnelblick
 atom
+ssh
+zsh
