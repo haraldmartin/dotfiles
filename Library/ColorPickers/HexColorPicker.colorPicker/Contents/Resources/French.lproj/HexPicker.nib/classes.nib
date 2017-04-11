@@ -1,0 +1,33 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                colorChanged = id; 
+                copyToClipboard = id; 
+                savePrefs = id; 
+                showPrefs = id; 
+                visitWebsite = id; 
+            }; 
+            CLASS = HexColorPicker; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                checkForUpdates = NSButton; 
+                colorHex = NSTextField; 
+                colorPickerPrefs = NSPanel; 
+                colorPickerView = NSView; 
+                enableShorthand = NSButton; 
+                useDeviceColors = NSButton; 
+                useUpperHex = NSButton; 
+                visitWebsite = NSButton; 
+            }; 
+            SUPERCLASS = NSColorPicker; 
+        }
+    ); 
+    IBVersion = 1; 
+}
