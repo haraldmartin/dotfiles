@@ -2,45 +2,92 @@
 # vim: ft=ruby
 
 git_bundles = %w[
+  
+  # Appearance + file management
   Lokaltog/vim-powerline.git
-  Townk/vim-autoclose.git
-  airblade/vim-gitgutter
-  chriskempson/vim-tomorrow-theme.git
-  dtyuan/vim-rspec.git
-  groenewege/vim-less.git
-  haraldmartin/vim-snipmate.git
-  henrik/vim-ruby-runner.git
-  kchmck/vim-coffee-script.git
   kien/ctrlp.vim
   mileszs/ack.vim.git
-  othree/html5-syntax.vim.git
-  scrooloose/snipmate-snippets.git
-  sjl/vitality.vim.git
-  tpope/vim-bundler.git
-  tpope/vim-dispatch
+  scrooloose/nerdtree
+
+  # For instance if you type an '(', ``autoclose`` will automatically insert a ')' and put the cursor between than
+  Townk/vim-autoclose.git
+
+  # Git
+  airblade/vim-gitgutter
   tpope/vim-fugitive.git
   tpope/vim-git.git
+
+  # Themes
+  chriskempson/vim-tomorrow-theme.git
+
+  # Ruby + Rails stuff
+  dtyuan/vim-rspec.git
+  henrik/vim-ruby-runner.git
+  tpope/vim-rails.git
+  vim-ruby/vim-ruby
+
+  # Syntax supports
+  groenewege/vim-less.git
+  kchmck/vim-coffee-script.git
+  othree/html5-syntax.vim.git
   tpope/vim-haml.git
   tpope/vim-markdown.git
-  tpope/vim-ragtag.git
-  tpope/vim-rails.git
-  tpope/vim-surround.git
-  tpope/vim-unimpaired.git
-  vim-ruby/vim-ruby
-  vim-scripts/Align.git
   vim-scripts/Arduino-syntax-file.git
+
+  # HTML
+  tpope/vim-ragtag.git
+  
+  # Snippets
+  haraldmartin/vim-snipmate.git
+  scrooloose/snipmate-snippets.git
+
+  # vim interface to Web API
+  # mattn/webapi-vim
+  
+  # Bundle, Bopen etc
+  tpope/vim-bundler.git
+
+  # dispatch.vim: asynchronous build and test dispatcher
+  tpope/vim-dispatch
+
+  # Navigating, cs' etc
+  tpope/vim-surround.git
+
+  # Navigating and toggling optins, like [n, [ow etc
+  tpope/vim-unimpaired.git
+
+  vim-scripts/Align.git
   vim-scripts/ColorX.git
   vim-scripts/Gist.vim.git
   vim-scripts/JavaScript-Indent.git
   vim-scripts/camelcasemotion.git
   vim-scripts/endwise.vim.git
   vim-scripts/tComment.git
-  altercation/vim-colors-solarized
   chriskempson/base16-vim
-  scrooloose/nerdtree
-  toyamarinyon/vim-swift
-  wavded/vim-stylus
-]
+
+  # sjl/vitality.vim.git
+  # toyamarinyon/vim-swift
+  rorymckinley/vim-symbols-strings
+  christophermca/meta5
+
+  #_new_color_schemes
+  junegunn/seoul256.vim
+  vim-scripts/peaksea
+  joshdick/onedark.vim
+
+  #_distraction_free_writing
+  junegunn/goyo.vim
+  junegunn/limelight.vim
+  amix/vim-zenroom2
+
+  #altercation/vim-colors-solarized
+  #junegunn/vim-emoji
+  #wavded/vim-stylus
+  #ervandew/screen
+  #elixir-lang/vim-elixir
+  atelierbram/vim-colors_duotones
+].compact.reject { |i| i =~ /^#/ }
+
 
 require 'fileutils'
 
