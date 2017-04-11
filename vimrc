@@ -15,12 +15,19 @@ filetype plugin indent on
 " ----- settings --------------------------------------------------------------
 
 set encoding=utf-8
+set mouse=a
+
+set number
 
 syntax on
-set background=dark                   " Some plugins/themes need this
-" color Tomorrow-Night
-" color jellybeans+
-color Spacedust
+set background=dark
+" let g:seoul256_background = 233
+" colo seoul256
+" colo base16-ocean
+" colo spacedust
+colo onedark
+
+set guifont=Source\ Code\ Pro:h14
 
 set showcmd                           " Display incomplete commands.
 set showmode                          " Display the mode you're in.
@@ -42,17 +49,21 @@ set hlsearch incsearch                " Highlight matches + as you type
 set ignorecase smartcase              " Case-insensitive searching unless expression contains capital letter
 
 set wildmenu                          " Enhanced command line completion.
-set wildmode=list:longest             " Complete files like a shell.
-set wildignore+=tmp/*,*/tmp/*,*/tmp/**/*,*.jpg,*.gif,*.tif,*.png
+" set wildmode=list:longest             " Complete files like a shell.
+set wildmode=longest,list:longest       " https://robots.thoughtbot.com/vim-you-complete-me
+
+
+set wildignore+=tmp/*,*/tmp/*,*/tmp/**/*,*.jpg,*.gif,*.tif,*.png,node_modules,*.js.map,*.mp3,*.swf,*.woff,node_modules,bower_components
 set shell=bash
 
 set nowrap                            " Turn on line wrapping.
+set showbreak=↪
 set scrolloff=3                       " Show 3 lines of context around the cursor.
 set visualbell                        " No beeping.
 
 " Backup files
-set backupdir=~/.vim/backup
-set directory=~/.vim/backup
+set backupdir=~/.vim-backup
+set directory=~/.vim-backup
 
 " Indention
 set tabstop=2 softtabstop=2 shiftwidth=2
@@ -130,8 +141,8 @@ vmap > >gv
 vmap < <gv
 
 " Tab mappings.
-noremap <S-Left> :tabp<CR>
-noremap <S-Right> :tabn<CR>
+noremap <C-Left> :tabp<CR>
+noremap <C-Right> :tabn<CR>
 
 " Always show tab bar
 " set showtabline=2
@@ -164,13 +175,14 @@ noremap <D-]> :bnext<return>
 " noremap <leader>T :CommandTFlush<cr>\|:CommandT<cr>
 noremap <leader>t :CtrlP<CR>
 noremap <leader>T :CtrlPBuffer<CR>
+nnoremap <leader>. :CtrlPTag<cr>
 
 " Ctrl-P
 " let g:ctrlp_match_window_bottom = 0
 " let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height = 30
 let g:ctrlp_show_hidden = 0
-let g:ctrlp_max_files = 0
+
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
@@ -203,6 +215,9 @@ noremap <leader>d <Esc>:call CleanClose(1)<CR>
 
 " map ,, to run tests in current file
 nnoremap ,, :w \| !ruby -Itest %<cr>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
 
 " --------- commands ---------------------------------------------------------
 
