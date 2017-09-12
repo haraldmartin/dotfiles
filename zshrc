@@ -129,3 +129,7 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 
 # . /Users/martin/torch/install/bin/torch-activate
 export PATH="$HOME/.fastlane/bin:$PATH"
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
+source /usr/local/bin/virtualenvwrapper.sh
