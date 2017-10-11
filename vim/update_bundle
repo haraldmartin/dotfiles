@@ -1,8 +1,4 @@
-#!/usr/bin/env ruby
-# vim: ft=ruby
-
-git_bundles = %w[
-  
+git_bundles = %w{
   # Appearance + file management
   Lokaltog/vim-powerline.git
   kien/ctrlp.vim
@@ -86,7 +82,10 @@ git_bundles = %w[
   #ervandew/screen
   #elixir-lang/vim-elixir
   atelierbram/vim-colors_duotones
-].compact.reject { |i| i =~ /^#/ }
+
+  # Python + Django
+  tweekmonster/django-plus.vim
+}.compact.reject { |i| i =~ /^#/ }
 
 
 require 'fileutils'
