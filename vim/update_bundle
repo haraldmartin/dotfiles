@@ -1,4 +1,4 @@
-git_bundles = %w{
+git_bundles = %q{
   # Appearance + file management
   Lokaltog/vim-powerline.git
   kien/ctrlp.vim
@@ -85,8 +85,10 @@ git_bundles = %w{
 
   # Python + Django
   tweekmonster/django-plus.vim
-}.compact.reject { |i| i =~ /^#/ }
-
+} .split(/\n/)
+  .compact
+  .reject { |i| i =~ /^\s*#/ || i.strip == "" }
+  .map(&:strip)
 
 require 'fileutils'
 
@@ -101,7 +103,7 @@ if bundles_unlisted.any?
   puts 
   puts "*** Some bundles found on disk but not on file ***"
   bundles_unlisted.each do |bundle|
-    url = File.read("#{bundle_dir}/#{bundle}/.git/config").match(/url = (.+)$/)[1]
+    url = File.read("#{bundle_dir}/#{bundle}/.git/config").match(/url = (.+)$/)[1] rescue nil
     puts "#{bundle} (#{url})"
   end
   puts
@@ -111,7 +113,9 @@ git_bundles.each do |url|
   dirname = File.basename(url).sub(/\.git$/, '')
   puts "* Unpacking #{url} into #{dirname}"
   dir = File.join(bundle_dir, dirname)
+  puts dir
   `cd #{dir} 2>/dev/null && git pull || git clone https://github.com/#{url} #{dir}`
+  # puts "cd #{dir} 2>/dev/null && git pull || git clone https://github.com/#{url} #{dir}"
 end
 
 puts "* Updating to latest pathogen"
