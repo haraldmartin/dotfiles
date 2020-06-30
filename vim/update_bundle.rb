@@ -1,90 +1,63 @@
+#!/usr/bin/env ruby
+
 git_bundles = %q{
   # Appearance + file management
-  Lokaltog/vim-powerline.git
-  kien/ctrlp.vim
-  mileszs/ack.vim.git
+  powerline/powerline
+  junegunn/fzf.vim
   scrooloose/nerdtree
 
   # For instance if you type an '(', ``autoclose`` will automatically insert a ')' and put the cursor between than
-  Townk/vim-autoclose.git
+  " Townk/vim-autoclose.git
 
   # Git
   airblade/vim-gitgutter
   tpope/vim-fugitive.git
   tpope/vim-git.git
 
-  # Themes
-  chriskempson/vim-tomorrow-theme.git
-
   # Ruby + Rails stuff
-  dtyuan/vim-rspec.git
-  henrik/vim-ruby-runner.git
   tpope/vim-rails.git
   vim-ruby/vim-ruby
+  tpope/vim-bundler.git
 
   # Syntax supports
-  groenewege/vim-less.git
-  kchmck/vim-coffee-script.git
   othree/html5-syntax.vim.git
-  tpope/vim-haml.git
   tpope/vim-markdown.git
-  vim-scripts/Arduino-syntax-file.git
 
   # HTML
+  # ctrl-x tags for html php osv
   tpope/vim-ragtag.git
   
   # Snippets
-  haraldmartin/vim-snipmate.git
-  scrooloose/snipmate-snippets.git
-
-  # vim interface to Web API
-  # mattn/webapi-vim
+  # haraldmartin/vim-snipmate.git
+  # scrooloose/snipmate-snippets.git
+  # SirVer/ultisnips.git
   
-  # Bundle, Bopen etc
-  tpope/vim-bundler.git
-
   # dispatch.vim: asynchronous build and test dispatcher
   tpope/vim-dispatch
 
   # Navigating, cs' etc
   tpope/vim-surround.git
-
-  # Navigating and toggling optins, like [n, [ow etc
-  tpope/vim-unimpaired.git
-
-  vim-scripts/Align.git
-  vim-scripts/ColorX.git
-  vim-scripts/Gist.vim.git
-  vim-scripts/JavaScript-Indent.git
   vim-scripts/camelcasemotion.git
-  vim-scripts/endwise.vim.git
+  tpope/vim-unimpaired.git
+  vim-scripts/Align.git
+  tpope/vim-endwise
   vim-scripts/tComment.git
-  chriskempson/base16-vim
 
-  # sjl/vitality.vim.git
-  # toyamarinyon/vim-swift
-  rorymckinley/vim-symbols-strings
-  christophermca/meta5
+  # Languages
+  vim-scripts/JavaScript-Indent.git
 
-  #_new_color_schemes
+  # Colors
   junegunn/seoul256.vim
   vim-scripts/peaksea
   joshdick/onedark.vim
-
-  #_distraction_free_writing
-  junegunn/goyo.vim
-  junegunn/limelight.vim
-  amix/vim-zenroom2
-
-  #altercation/vim-colors-solarized
-  #junegunn/vim-emoji
-  #wavded/vim-stylus
-  #ervandew/screen
-  #elixir-lang/vim-elixir
-  atelierbram/vim-colors_duotones
+  drewtempelmeyer/palenight.vim
 
   # Python + Django
   tweekmonster/django-plus.vim
+
+  # Formatters
+  pappasam/vim-filetype-formatter
+
 } .split(/\n/)
   .compact
   .reject { |i| i =~ /^\s*#/ || i.strip == "" }
@@ -102,10 +75,13 @@ bundles_unlisted = bundles_on_disk - bundles_listed
 if bundles_unlisted.any?
   puts 
   puts "*** Some bundles found on disk but not on file ***"
+
   bundles_unlisted.each do |bundle|
     url = File.read("#{bundle_dir}/#{bundle}/.git/config").match(/url = (.+)$/)[1] rescue nil
     puts "#{bundle} (#{url})"
+    puts "moving into bundles-disabled/"
   end
+
   puts
 end
 
@@ -113,9 +89,7 @@ git_bundles.each do |url|
   dirname = File.basename(url).sub(/\.git$/, '')
   puts "* Unpacking #{url} into #{dirname}"
   dir = File.join(bundle_dir, dirname)
-  puts dir
   `cd #{dir} 2>/dev/null && git pull || git clone https://github.com/#{url} #{dir}`
-  # puts "cd #{dir} 2>/dev/null && git pull || git clone https://github.com/#{url} #{dir}"
 end
 
 puts "* Updating to latest pathogen"
