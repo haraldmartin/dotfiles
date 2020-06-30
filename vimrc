@@ -2,6 +2,7 @@
 " github.com/henrik/dotfiles
 " github.com/garybernhardt/dotfiles
 " stevelosh.com/blog/2010/09/coming-home-to-vim
+" github.com/junegunn/dotfiles
 
 set nocompatible                      " Must come first because it changes other options.
 
@@ -46,6 +47,8 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
   augroup END
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+set rtp+=/usr/local/bin/fzf
+
 Plug 'junegunn/fzf.vim'
 Plug 'ap/vim-buftabline'
 
@@ -103,11 +106,6 @@ call plug#end()
 
 let mapleader = ","
 
-" Pathogen for plugin management
-" filetype off
-" call pathogen#infect()                " Load bundles
-" filetype plugin indent on
-
 
 " ----- settings --------------------------------------------------------------
 
@@ -120,10 +118,6 @@ syntax on
 set background=dark
 " let g:seoul256_background = 233
 " colo seoul256
-" colo base16-ocean
-" colo spacedust
-" colo onedark
-" colo gruvbox
 colo palenight
 
 set guifont=Source\ Code\ Pro:h14
@@ -141,7 +135,7 @@ set autoindent
 set modelines=1
 set nojoinspaces                      " 1 space, not 2, when joining sentences.
 set fillchars=vert:\                  " No vertical bar in splits "
-set clipboard^=unnamed,unnamedplus
+set clipboard^=unnamed,unnamedplus    " Share clipboard with OS X
 
 " Searching
 set gdefault
@@ -149,8 +143,8 @@ set hlsearch incsearch                " Highlight matches + as you type
 set ignorecase smartcase              " Case-insensitive searching unless expression contains capital letter
 
 set wildmenu                          " Enhanced command line completion.
-" set wildmode=list:longest             " Complete files like a shell.
-set wildmode=longest,list:longest       " https://robots.thoughtbot.com/vim-you-complete-me
+" set wildmode=list:longest           " Complete files like a shell.
+set wildmode=longest,list:longest     " https://robots.thoughtbot.com/vim-you-complete-me
 
 
 set wildignore+=tmp/*,*/tmp/*,*/tmp/**/*,*.jpg,*.gif,*.tif,*.png,node_modules,*.js.map,*.mp3,*.swf,*.woff,node_modules,bower_components,frontend_bundle,*.pyc,staticfiles
@@ -205,7 +199,7 @@ nnoremap <cr> :noh<cr>
 cabbrev w!! w !sudo tee % > /dev/null<CR>:e!<CR><CR>
 
 " bind control-l to hashrocket
-imap <C-l> <Space>=><Space>"
+" imap <C-l> <Space>=><Space>"
 
 " Duplicate a selection
 vmap D y'>p
@@ -218,6 +212,12 @@ nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
+
+" Create a split on the given side. (from http://technotales.wordpress.com/2010/04/29/vim-splits-a-guide-to-doing-exactly-what-you-want)
+nnoremap <leader><left>   :leftabove  vnew<CR>
+nnoremap <leader><right>  :rightbelow vnew<CR>
+nnoremap <leader><up>     :leftabove  new<CR>
+nnoremap <leader><down>   :rightbelow new<CR>
 
 " no n00b!!!!!!!!!!!
 nnoremap <up> <nop>
@@ -234,7 +234,7 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
 " Buffer switching
-map <F4> :ls<CR>:b<space>
+" map <F4> :ls<CR>:b<space>
 
 " In visual mode, indent and keep selection
 vmap > >gv
@@ -253,12 +253,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Create a split on the given side. (from http://technotales.wordpress.com/2010/04/29/vim-splits-a-guide-to-doing-exactly-what-you-want)
-nmap <leader><left>   :leftabove  vnew<CR>
-nmap <leader><right>  :rightbelow vnew<CR>
-nmap <leader><up>     :leftabove  new<CR>
-nmap <leader><down>   :rightbelow new<CR>
-
 " Edit shortcuts (from http://vimcasts.org/episodes/the-edit-command)
 nnoremap <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
@@ -269,23 +263,7 @@ nnoremap <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 noremap <D-[> :bprev<cr>
 noremap <D-]> :bnext<return>
 
-" Command T configuration
-" let g:CommandTMaxHeight=20
-" noremap <leader>t :CommandT<cr>
-" noremap <leader>T :CommandTFlush<cr>\|:CommandT<cr>
-" noremap <leader>t :CtrlP<CR>
-" noremap <leader>T :CtrlPBuffer<CR>
-" nnoremap <leader>. :CtrlPTag<cr>
-
-" Ctrl-P
-" let g:ctrlp_match_window_bottom = 0
-" let g:ctrlp_match_window_reversed = 0
-" let g:ctrlp_max_height = 30
-" let g:ctrlp_show_hidden = 0
-"
-" FZF config
-set rtp+=/usr/local/bin/fzf
-
+" FZF.vim mappings
 " https://jesseleite.com/posts/2/its-dangerous-to-vim-alone-take-fzf
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>F :Files<CR>
@@ -298,9 +276,7 @@ nnoremap <Leader>l :BLines<CR>
 nnoremap <Leader>L :Lines<CR>
 nnoremap <Leader>' :Marks<CR>
 
-" nmap <Leader>/ :Ag<Space>
 nnoremap <Leader>/ :Rg<Space>
-
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
@@ -329,7 +305,6 @@ noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 noremap <leader>P :set paste<CR>:put! *<CR>:set nopaste<CR>
 
 " Close a buffer without closing the split
-" noremap <leader>d <Esc>:call CleanClose(1)<CR>
 command Bd bp\|bd \#
 noremap <leader>d :Bd <CR>
 
@@ -339,6 +314,8 @@ nmap ,, :w \| !ruby -Itest %<cr>
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
+
+" File formatting settings
 " nnoremap <leader>f :FiletypeFormat<cr>
 " vnoremap <leader>f :FiletypeFormat<cr>
 
@@ -359,56 +336,6 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
-
-" -------- cursors ---------------"
-
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
-" optional reset cursor on start:
-augroup myCmds
-au!
-autocmd VimEnter * silent !echo -ne "\e[2 q"
-augroup END
-
-" ----------- syntastic settings 
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" ------------------------------
-
-
-" let g:vim_filetype_formatter_commands = {
-"       \ 'scss': 'npx --no-install prettier --write',
-"       \ 'css': 'npx --no-install prettier --write',
-"       \ }
-
-" --------- commands ---------------------------------------------------------
-
-" function! CleanClose(tosave)
-"   if (a:tosave == 1)
-"       w!
-"   endif
-"   let todelbufNr = bufnr("%")
-"   let newbufNr = bufnr("#")
-"   if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
-"       exe "b".newbufNr
-"   else
-"       bnext
-"   endif
-" 
-"   if (bufnr("%") == todelbufNr)
-"       new
-"   endif
-"   exe "bd".todelbufNr
-" endfunction
-
 
 " ------ auto commmands ------------------------------------------------------
 
