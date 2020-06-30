@@ -4,12 +4,109 @@
 " stevelosh.com/blog/2010/09/coming-home-to-vim
 
 set nocompatible                      " Must come first because it changes other options.
+
+
+" ----------- plugins --------------------------------------------------------
+
+call plug#begin('~/.vim/plugged')
+
+" Appearance
+Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+  autocmd! User indentLine doautocmd indentLine Syntax
+  let g:indentLine_color_term = 239
+  let g:indentLine_color_gui = '#616161'
+
+Plug 'powerline/powerline'
+
+" Colors
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
+Plug 'yuttie/hydrangea-vim'
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'AlessandroYorba/Despacio'
+Plug 'cocopon/iceberg.vim'
+Plug 'w0ng/vim-hybrid'
+Plug 'nightsense/snow'
+Plug 'nightsense/stellarized'
+Plug 'arcticicestudio/nord-vim'
+Plug 'nightsense/cosmic_latte'
+Plug 'haishanh/night-owl.vim'
+Plug 'drewtempelmeyer/palenight.vim'
+
+" File + buffer management
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+  augroup nerd_loader
+    autocmd!
+    autocmd VimEnter * silent! autocmd! FileExplorer
+    autocmd BufEnter,BufNew *
+          \  if isdirectory(expand('<amatch>'))
+          \|   call plug#load('nerdtree')
+          \|   execute 'autocmd! nerd_loader'
+          \| endif
+  augroup END
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'ap/vim-buftabline'
+
+" Formatting
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/rainbow_parentheses.vim'
+autocmd VimEnter * RainbowParentheses
+
+Plug 'haraldmartin/vim-filetype-formatter'
+Plug 'cohama/lexima.vim'
+
+" Navigating
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/camelcasemotion'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-endwise'
+Plug 'vim-scripts/tComment'
+
+" Git
+Plug 'tpope/vim-fugitive'
+  nmap     <Leader>g :Gstatus<CR>gg<c-n>
+  nnoremap <Leader>d :Gdiff<CR>
+Plug 'rhysd/git-messenger.vim'
+Plug 'junegunn/gv.vim' " A git commit browser.
+Plug 'mhinz/vim-signify'
+  let g:signify_vcs_list = ['git']
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+" Searching
+" Plug 'junegunn/vim-slash'
+
+" Languages
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'alvan/vim-closetag'
+  let g:closetag_filenames = '*.js'
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-bundler'
+Plug 'othree/html5-syntax.vim'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-ragtag'
+Plug 'tweekmonster/django-plus.vim'
+
+" Multi
+Plug 'tpope/vim-dispatch'
+
+" Initialize plugin system
+call plug#end()
+
+
 let mapleader = ","
 
 " Pathogen for plugin management
-filetype off
-call pathogen#infect()                " Load bundles
-filetype plugin indent on
+" filetype off
+" call pathogen#infect()                " Load bundles
+" filetype plugin indent on
 
 
 " ----- settings --------------------------------------------------------------
@@ -25,7 +122,9 @@ set background=dark
 " colo seoul256
 " colo base16-ocean
 " colo spacedust
-colo onedark
+" colo onedark
+" colo gruvbox
+colo palenight
 
 set guifont=Source\ Code\ Pro:h14
 
@@ -42,6 +141,7 @@ set autoindent
 set modelines=1
 set nojoinspaces                      " 1 space, not 2, when joining sentences.
 set fillchars=vert:\                  " No vertical bar in splits "
+set clipboard^=unnamed,unnamedplus
 
 " Searching
 set gdefault
@@ -53,7 +153,7 @@ set wildmenu                          " Enhanced command line completion.
 set wildmode=longest,list:longest       " https://robots.thoughtbot.com/vim-you-complete-me
 
 
-set wildignore+=tmp/*,*/tmp/*,*/tmp/**/*,*.jpg,*.gif,*.tif,*.png,node_modules,*.js.map,*.mp3,*.swf,*.woff,node_modules,bower_components
+set wildignore+=tmp/*,*/tmp/*,*/tmp/**/*,*.jpg,*.gif,*.tif,*.png,node_modules,*.js.map,*.mp3,*.swf,*.woff,node_modules,bower_components,frontend_bundle,*.pyc,staticfiles
 set shell=bash
 
 set nowrap                            " Turn on line wrapping.
@@ -173,15 +273,33 @@ noremap <D-]> :bnext<return>
 " let g:CommandTMaxHeight=20
 " noremap <leader>t :CommandT<cr>
 " noremap <leader>T :CommandTFlush<cr>\|:CommandT<cr>
-noremap <leader>t :CtrlP<CR>
-noremap <leader>T :CtrlPBuffer<CR>
-nnoremap <leader>. :CtrlPTag<cr>
+" noremap <leader>t :CtrlP<CR>
+" noremap <leader>T :CtrlPBuffer<CR>
+" nnoremap <leader>. :CtrlPTag<cr>
 
 " Ctrl-P
 " let g:ctrlp_match_window_bottom = 0
 " let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_max_height = 30
-let g:ctrlp_show_hidden = 0
+" let g:ctrlp_max_height = 30
+" let g:ctrlp_show_hidden = 0
+"
+" FZF config
+set rtp+=/usr/local/bin/fzf
+
+" https://jesseleite.com/posts/2/its-dangerous-to-vim-alone-take-fzf
+nnoremap <Leader>f :GFiles<CR>
+nnoremap <Leader>F :Files<CR>
+nnoremap <C-P> :GFiles <CR>
+
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>h :History<CR>
+
+nnoremap <Leader>l :BLines<CR>
+nnoremap <Leader>L :Lines<CR>
+nnoremap <Leader>' :Marks<CR>
+
+" nmap <Leader>/ :Ag<Space>
+nnoremap <Leader>/ :Rg<Space>
 
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -196,8 +314,8 @@ vnoremap : ;
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " I use Ack a lot (described below), so I mapped a leader key for it:
-nnoremap <leader>a :Ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+" nnoremap <leader>a :Ack
+" let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " I have a ,v mapping to reselect the text that was just pasted so I can
 " perform commands (like indentation) on it:
@@ -211,64 +329,85 @@ noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 noremap <leader>P :set paste<CR>:put! *<CR>:set nopaste<CR>
 
 " Close a buffer without closing the split
-noremap <leader>d <Esc>:call CleanClose(1)<CR>
+" noremap <leader>d <Esc>:call CleanClose(1)<CR>
+command Bd bp\|bd \#
+noremap <leader>d :Bd <CR>
 
 " map ,, to run tests in current file
-nnoremap ,, :w \| !ruby -Itest %<cr>
+nmap ,, :w \| !ruby -Itest %<cr>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
+" nnoremap <leader>f :FiletypeFormat<cr>
+" vnoremap <leader>f :FiletypeFormat<cr>
+
+autocmd BufWritePre *.py FiletypeFormat
+autocmd BufWritePre *.js FiletypeFormat
+autocmd BufWritePre *.jsx FiletypeFormat
+autocmd BufWritePre *.css FiletypeFormat
+autocmd BufWritePre *.scss FiletypeFormat
+
+" -------= plugin ssettings ------------------------
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+
+" -------- cursors ---------------"
+
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+" optional reset cursor on start:
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
+
+" ----------- syntastic settings 
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" ------------------------------
+
+
+" let g:vim_filetype_formatter_commands = {
+"       \ 'scss': 'npx --no-install prettier --write',
+"       \ 'css': 'npx --no-install prettier --write',
+"       \ }
+
 " --------- commands ---------------------------------------------------------
 
-function! CleanClose(tosave)
-  if (a:tosave == 1)
-      w!
-  endif
-  let todelbufNr = bufnr("%")
-  let newbufNr = bufnr("#")
-  if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
-      exe "b".newbufNr
-  else
-      bnext
-  endif
-
-  if (bufnr("%") == todelbufNr)
-      new
-  endif
-  exe "bd".todelbufNr
-endfunction
-
-let g:gitgrepprg="git\\ grep\\ -En"
-
-function! s:GitGrep(cmd, args)
-  let grepprg_bak=&grepprg
-  exec "set grepprg=" . g:gitgrepprg
-
-  let l:grepargs = a:args
-  " Escape pipes in e.g. :GitGrep "foo|bar"
-  let l:grepargs = escape(l:grepargs, '|')
-  " Escape again if piped argument is unquoted, e.g. :GitGrep foo|bar
-  if l:grepargs =~ '\(^\|\s\)[^"'']\S*|'
-    let l:grepargs = escape(l:grepargs, '|')
-  endif
-
-  silent execute a:cmd . " " . l:grepargs
-
-  if a:cmd =~# '^l'
-    topleft lopen
-  else
-    topleft copen
-  endif
-
-  let &grepprg=grepprg_bak
-  exec "redraw!"
-endfunction
-
-command! -nargs=* -complete=file GitGrep call s:GitGrep('grep<bang>', <q-args>)
-command! -nargs=* -complete=file GitGrepAdd call s:GitGrep('grepadd<bang>', <q-args>)
-command! -nargs=* -complete=file LGitGrep call s:GitGrep('lgrep<bang>', <q-args>)
-command! -nargs=* -complete=file LGitGrepAdd call s:GitGrep('lgrepadd<bang>', <q-args>)
+" function! CleanClose(tosave)
+"   if (a:tosave == 1)
+"       w!
+"   endif
+"   let todelbufNr = bufnr("%")
+"   let newbufNr = bufnr("#")
+"   if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
+"       exe "b".newbufNr
+"   else
+"       bnext
+"   endif
+" 
+"   if (bufnr("%") == todelbufNr)
+"       new
+"   endif
+"   exe "bd".todelbufNr
+" endfunction
 
 
 " ------ auto commmands ------------------------------------------------------
@@ -290,12 +429,12 @@ if has("autocmd")
   au BufRead,BufNewFile *.{md,mdown,mkd,mkdn} set ft=markdown
 
   " <Leader>r or <D-r> to run CoffeeScript.
-  au FileType coffee map <buffer> <Leader>r :CoffeeRun<CR>
-  au FileType coffee map <buffer> <D-r> :CoffeeRun<CR>
+  " au FileType coffee map <buffer> <Leader>r :CoffeeRun<CR>
+  " au FileType coffee map <buffer> <D-r> :CoffeeRun<CR>
 
   " <Leader>R or <D-R> to see CoffeeScript compiled.
-  au FileType coffee map <buffer> <Leader>R :CoffeeCompile<CR>
-  au FileType coffee map <buffer> <D-R> :CoffeeCompile<CR>
+  " au FileType coffee map <buffer> <Leader>R :CoffeeCompile<CR>
+  " au FileType coffee map <buffer> <D-R> :CoffeeCompile<CR>
 
   " Unbreak 'crontab -e' with Vim: http://drawohara.com/post/6344279/crontab-temp-file-must-be-edited-in-place
   au FileType crontab set nobackup nowritebackup
