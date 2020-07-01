@@ -17,20 +17,23 @@ Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
   let g:indentLine_color_term = 239
   let g:indentLine_color_gui = '#616161'
 
-Plug 'powerline/powerline'
+" Plug 'powerline/powerline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+  let g:airline#extensions#tabline#enabled = 1
 
 " Colors
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
-Plug 'yuttie/hydrangea-vim'
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'AlessandroYorba/Despacio'
+" Plug 'yuttie/hydrangea-vim'
+" Plug 'tyrannicaltoucan/vim-deep-space'
+" Plug 'AlessandroYorba/Despacio'
 Plug 'cocopon/iceberg.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'nightsense/snow'
-Plug 'nightsense/stellarized'
+" Plug 'nightsense/stellarized'
 Plug 'arcticicestudio/nord-vim'
-Plug 'nightsense/cosmic_latte'
+" Plug 'nightsense/cosmic_latte'
 Plug 'haishanh/night-owl.vim'
 Plug 'drewtempelmeyer/palenight.vim'
 
@@ -50,7 +53,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 set rtp+=/usr/local/bin/fzf
 
 Plug 'junegunn/fzf.vim'
-Plug 'ap/vim-buftabline'
+let g:fzf_layout = { 'down': '70%' }
+
+" Plug 'ap/vim-buftabline'
 
 " Formatting
 Plug 'junegunn/vim-easy-align'
@@ -118,7 +123,8 @@ syntax on
 set background=dark
 " let g:seoul256_background = 233
 " colo seoul256
-colo palenight
+" colo palenight
+colo iceberg
 
 set guifont=Source\ Code\ Pro:h14
 
@@ -269,7 +275,7 @@ nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>F :Files<CR>
 nnoremap <C-P> :GFiles <CR>
 
-nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>B :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 
 nnoremap <Leader>l :BLines<CR>
@@ -305,11 +311,33 @@ noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 noremap <leader>P :set paste<CR>:put! *<CR>:set nopaste<CR>
 
 " Close a buffer without closing the split
-command Bd bp\|bd \#
-noremap <leader>d :Bd <CR>
+" command Bd bp\|bd \#
+" noremap <leader>d :Bd <CR>
 
-" map ,, to run tests in current file
-nmap ,, :w \| !ruby -Itest %<cr>
+noremap <leader>d <Esc>:call CleanClose(1) <CR>
+
+function! CleanClose(tosave)
+  if (a:tosave == 1)
+      w!
+  endif
+
+  let todelbufNr = bufnr("%")
+  let newbufNr = bufnr("#")
+
+  if ((newbufNr != -1) && (newbufNr != todelbufNr) && buflisted(newbufNr))
+      exe "b".newbufNr
+  else
+      bnext
+  endif
+
+  if (bufnr("%") == todelbufNr)
+      new
+  endif
+
+  exe "bd".todelbufNr
+endfunction
+
+" nmap ,, :w \| !ruby -Itest %<cr>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
@@ -347,7 +375,7 @@ if has("autocmd")
 
   " make and python use real tabs
   au FileType make    set noexpandtab
-  au FileType python  set noexpandtab
+  " au FileType python  set noexpandtab
 
   " These files are also Ruby.
   au BufRead,BufNewFile {Gemfile,Rakefile,Thorfile,Vagrantfile,Guardfile,config.ru} set ft=ruby
