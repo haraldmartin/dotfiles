@@ -69,31 +69,22 @@ export PROMPT="%(1j. %j .)$PROMPT"
 # User configuration
 
 export PATH="/Users/martin/.rbenv/shims:/Users/martin/.rbenv/bin:/Users/martin/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/share/npm/bin/:"
-# export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH=$PATH:/usr/local/Cellar/gettext/0.20.1/bin
+export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
+export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+
 export LC_ALL=en_US.UTF-8
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
 alias vim="/usr/local/bin/vim"
 export EDITOR='vim'
 
-# else
-#   export EDITOR='mvim'
-# fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 eval "$(direnv hook zsh)"
 
@@ -109,14 +100,13 @@ alias pg.stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
 
 alias serve='python -m SimpleHTTPServer 8000'
 alias transmit='open -a Transmit'
-alias restart='touch tmp/restart.txt'
+# alias restart='touch tmp/restart.txt'
 
 alias nr='npm run'
 alias colordiff2='colordiff | diff-so-fancy | less -RFX'
 alias now='date +"%Y-%m-%d@%H-%M-%S"'
 
-alias ae='cd ~/Projects/AllEars/allears' # && workon allears'
-
+# docker
 alias d-c='docker-compose'
 alias dr='docker-compose run'
 alias de='docker-compose exec'
@@ -124,19 +114,12 @@ alias dcu='docker-compose up'
 alias dcd='docker-compose down'
 alias docker-prune='docker container prune && docker images prune && docker system prune'
 
+# python & django
 alias f='fab -R'
-
-# alias mtr='m test --failfast --parallel=4'
-# alias mt-keep='mtr --keepdb'
-# alias mt-no-keep='mtr channels internal customers transcripts website customers analysis api machine_learning'
-# alias mt='mt-keep channels internal customers transcripts website customers analysis api machine_learning'
-
-alias tx-compile-and-push='m makemessages -l sv && tx push --source'
 
 m() { fab manage:$* }
 alias mc='m shell_plus'
 alias ms='fab server'
-
 
 alias j='jobs'
 alias hosts='sudo $EDITOR /etc/hosts'
@@ -157,10 +140,6 @@ export SHELL=/bin/zsh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(rbenv init -)"
 
-# function svtplay-dl-and-open {
-#   svtplay-dl $* | grep Outfile | awk '{ print $3 }' | xargs open -a VLC
-# }
-
 function flash_cache {
   sudo dscacheutil -flushcache
   sudo killall -HUP mDNSResponder
@@ -169,27 +148,3 @@ function flash_cache {
 alias xml_pp='xmllint --format -'
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
-
-# export PATH="$HOME/.fastlane/bin:$PATH"
-
-# Python & virtualenv
-# export WORKON_HOME=$HOME/.virtualenvs
-# export PROJECT_HOME=$HOME/Devel
-# export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
-#
-# test -f /usr/local/bin/virtualenvwrapper.sh && \
-#   source /usr/local/bin/virtualenvwrapper.sh
-
-# autostart allears virtualenv on AE dota
-# [[ $(hostname) = 'hmsbook13.local' ]] && workon allears
-# date
-
-# export VIRTUAL_ENV='/usr/local/opt/pyenv/versions/2.7.17'
-# export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-
-# if command -v pyenv 1>/dev/null 2>&1; then
-#   eval "$(pyenv init -)"
-#   # eval "$(pyenv virtualenv-init -)"
-# fi
-export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
-export PATH="$HOME/Library/Python/2.7/bin:$PATH"
