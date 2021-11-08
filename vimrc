@@ -55,7 +55,7 @@ set rtp+=/usr/local/bin/fzf
 Plug 'junegunn/fzf.vim'
 let g:fzf_layout = { 'down': '70%' }
 
-" Plug 'ap/vim-buftabline'
+Plug 'mileszs/ack.vim'
 
 " Formatting
 Plug 'junegunn/vim-easy-align'
@@ -63,8 +63,18 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/rainbow_parentheses.vim'
 autocmd VimEnter * RainbowParentheses
 
+Plug 'psf/black'
+  autocmd BufWritePre *.py execute ':silent Black'
+  let g:black_virtualenv = "~/.vim-black"
+
+
+
+Plug 'brentyi/isort.vim'
+  let g:isort_vim_options = '--profile black'
+
 Plug 'haraldmartin/vim-filetype-formatter'
-Plug 'cohama/lexima.vim'
+" Plug 'cohama/lexima.vim' " autoclose parenthesis
+Plug 'Townk/vim-autoclose'
 
 " Navigating
 Plug 'tpope/vim-surround'
@@ -72,6 +82,7 @@ Plug 'vim-scripts/camelcasemotion'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-endwise'
 Plug 'vim-scripts/tComment'
+Plug 'AndrewRadev/sideways.vim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -81,10 +92,10 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'junegunn/gv.vim' " A git commit browser.
 Plug 'mhinz/vim-signify'
   let g:signify_vcs_list = ['git']
-
+  
 " Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " Searching
 " Plug 'junegunn/vim-slash'
@@ -101,9 +112,12 @@ Plug 'othree/html5-syntax.vim'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-ragtag'
 Plug 'tweekmonster/django-plus.vim'
+" Plug 'vim-test/vim-test'
 
 " Multi
 Plug 'tpope/vim-dispatch'
+
+Plug 'aserebryakov/vim-todo-lists'
 
 " Initialize plugin system
 call plug#end()
@@ -120,11 +134,19 @@ set mouse=a
 set number
 
 syntax on
+
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif
+
 set background=dark
 " let g:seoul256_background = 233
 " colo seoul256
 " colo palenight
-colo iceberg
+" colo iceberg
+colo challenger_deep
+let g:lightline = { 'colorscheme': 'challenger_deep'}
+
 
 set guifont=Source\ Code\ Pro:h14
 
@@ -141,7 +163,8 @@ set autoindent
 set modelines=1
 set nojoinspaces                      " 1 space, not 2, when joining sentences.
 set fillchars=vert:\                  " No vertical bar in splits "
-set clipboard^=unnamed,unnamedplus    " Share clipboard with OS X
+" set clipboard^=unnamed,unnamedplus    " Share clipboard with OS X
+set colorcolumn=88
 
 " Searching
 set gdefault
@@ -204,6 +227,10 @@ noremap S :w<cr>
 nnoremap <cr> :noh<cr>
 cabbrev w!! w !sudo tee % > /dev/null<CR>:e!<CR><CR>
 
+" switch tab with H (capital) and L
+nnoremap H gT
+nnoremap L gt
+
 " bind control-l to hashrocket
 " imap <C-l> <Space>=><Space>"
 
@@ -249,6 +276,8 @@ vmap < <gv
 " Tab mappings.
 noremap <C-Left> :tabp<CR>
 noremap <C-Right> :tabn<CR>
+noremap <leader>t :tabp<CR>
+noremap <leader>y :tabn<CR>
 
 " Always show tab bar
 " set showtabline=2
@@ -274,14 +303,19 @@ noremap <D-]> :bnext<return>
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>F :Files<CR>
 nnoremap <C-P> :GFiles <CR>
+nnoremap <C-B> :Buffers <CR>
+
+nnoremap <Leader>h :SidewaysLeft<cr>
+nnoremap <Leader>l :SidewaysRight<cr>
 
 nnoremap <Leader>B :Buffers<CR>
-nnoremap <Leader>h :History<CR>
+nnoremap <Leader>H :History<CR>
 
-nnoremap <Leader>l :BLines<CR>
+" nnoremap <Leader>l :BLines<CR>
 nnoremap <Leader>L :Lines<CR>
 nnoremap <Leader>' :Marks<CR>
 
+nnoremap <leader>a :Ack<space>
 nnoremap <Leader>/ :Rg<Space>
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -337,6 +371,11 @@ function! CleanClose(tosave)
   exe "bd".todelbufNr
 endfunction
 
+" function! MapTests()
+  " nnoremap ,, :Dispatch ls /
+" endfunction
+
+
 " nmap ,, :w \| !ruby -Itest %<cr>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
@@ -347,11 +386,14 @@ cmap w!! w !sudo tee > /dev/null %
 " nnoremap <leader>f :FiletypeFormat<cr>
 " vnoremap <leader>f :FiletypeFormat<cr>
 
+"autocmd BufWritePre *.py Isort
 autocmd BufWritePre *.py FiletypeFormat
 autocmd BufWritePre *.js FiletypeFormat
 autocmd BufWritePre *.jsx FiletypeFormat
 autocmd BufWritePre *.css FiletypeFormat
 autocmd BufWritePre *.scss FiletypeFormat
+
+autocmd BufWritePost *vimrc,*exrc :call feedkeys(":source %\<cr>")
 
 " -------= plugin ssettings ------------------------
 
@@ -364,6 +406,9 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+nnoremap ,, :Dispatch fab test:backend,customers.tests
+" nnoremap ,- :echo \:Dispatch fab test:backend,customers.tests
 
 " ------ auto commmands ------------------------------------------------------
 
