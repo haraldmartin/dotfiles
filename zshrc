@@ -52,7 +52,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git rails rsync heroku rake bundler brew themes rbenv)
-plugins=(git rsync heroku rake bundler brew themes rbenv pyenv iterm2 zsh-autosuggestions)
+plugins=(git rails ruby rsync heroku brew themes rbenv iterm2 zsh-autosuggestions)
 
 
 source $ZSH/oh-my-zsh.sh
@@ -71,8 +71,6 @@ export PROMPT="%(1j. %j .)$PROMPT"
 export PATH="/Users/martin/.rbenv/shims:/Users/martin/.rbenv/bin:/Users/martin/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/share/npm/bin/:"
 export PATH="$HOME/.yarn/bin:$PATH"
 export PATH=$PATH:/usr/local/Cellar/gettext/0.20.1/bin
-export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
-export PATH="$HOME/Library/Python/2.7/bin:$PATH"
 
 export LC_ALL=en_US.UTF-8
 
