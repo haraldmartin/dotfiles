@@ -93,8 +93,9 @@ alias o='open'
 alias myd='ssh myd'
 alias reload='. ~/.zshrc'
 
-alias pg.start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias pg.stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+alias pg_ctl@14='/usr/local/opt/postgresql@14/bin/pg_ctl'
+alias pg.start='pg_ctl@14 -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+alias pg.stop='pg_ctl@14 -D /usr/local/var/postgres stop -s -m fast'
 
 alias serve='python -m SimpleHTTPServer 8000'
 alias transmit='open -a Transmit'
