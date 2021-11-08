@@ -20,34 +20,34 @@ Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 " Plug 'powerline/powerline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-  let g:airline#extensions#tabline#enabled = 1
+  " let g:airline#extensions#tabline#enabled = 1
 
 " Colors
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
-" Plug 'yuttie/hydrangea-vim'
-" Plug 'tyrannicaltoucan/vim-deep-space'
-" Plug 'AlessandroYorba/Despacio'
 Plug 'cocopon/iceberg.vim'
-Plug 'w0ng/vim-hybrid'
-Plug 'nightsense/snow'
-" Plug 'nightsense/stellarized'
-Plug 'arcticicestudio/nord-vim'
-" Plug 'nightsense/cosmic_latte'
 Plug 'haishanh/night-owl.vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'saltdotac/citylights.vim'
+Plug 'junegunn/seoul256.vim'
+  let g:seoul256_background = 233
+Plug 'wojciechkepka/vim-github-dark'
+  let g:gh_color = "soft"
 
 " File + buffer management
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-  augroup nerd_loader
-    autocmd!
-    autocmd VimEnter * silent! autocmd! FileExplorer
-    autocmd BufEnter,BufNew *
-          \  if isdirectory(expand('<amatch>'))
-          \|   call plug#load('nerdtree')
-          \|   execute 'autocmd! nerd_loader'
-          \| endif
-  augroup END
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+"   augroup nerd_loader
+"     autocmd!
+"     autocmd VimEnter * silent! autocmd! FileExplorer
+"     autocmd BufEnter,BufNew *
+"           \  if isdirectory(expand('<amatch>'))
+"           \|   call plug#load('nerdtree')
+"           \|   execute 'autocmd! nerd_loader'
+"           \| endif
+"   augroup END
+Plug 'tpope/vim-vinegar'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 set rtp+=/usr/local/bin/fzf
