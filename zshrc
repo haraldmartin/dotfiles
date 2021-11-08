@@ -100,26 +100,49 @@ alias pg.stop='pg_ctl@14 -D /usr/local/var/postgres stop -s -m fast'
 alias serve='python -m SimpleHTTPServer 8000'
 alias r='bin/rails'
 alias transmit='open -a Transmit'
-# alias restart='touch tmp/restart.txt'
+
+# GIT
+alias gs='git status'
+
+# https://github.com/dandavison/delta
+unalias gd
+function gd {
+  if [ $(tput cols) -gt 150 ]; then
+    git -c "core.pager=delta --side-by-side" diff $*
+  else
+    git diff $*
+  fi
+}
+unalias gb
+
+function gb {
+  git switch $(git branch | fzf)
+}
 
 alias nr='npm run'
-alias colordiff2='colordiff | diff-so-fancy | less -RFX'
 alias now='date +"%Y-%m-%d@%H-%M-%S"'
 
 # docker
-alias d-c='docker-compose'
-alias dr='docker-compose run'
-alias de='docker-compose exec'
-alias dcu='docker-compose up'
-alias dcd='docker-compose down'
+alias d-c='docker compose'
+alias dr='docker compose run'
+alias de='docker compose exec'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
 alias docker-prune='docker container prune && docker images prune && docker system prune'
 
-# python & django
-alias f='fab -R'
+alias f='fg %-'
 
-m() { fab manage:$* }
-alias mc='m shell_plus'
+m() { PYTHONIOENCODING=utf8 fab manage:"$*" }
 alias ms='fab server'
+alias mc='m shell_plus --print-sql'
+mt() { m test,"--failfast,--keepdb,--debug-mode,--noinput,$*" }
+# alias mt='fab test'
+
+rebuild() {
+  docker compose stop $1
+  docker compose build $1
+  docker compose up $1
+}
 
 alias j='jobs'
 alias hosts='sudo $EDITOR /etc/hosts'
@@ -139,6 +162,7 @@ export SHELL=/bin/zsh
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(rbenv init -)"
+# eval "$(pyenv init -)"
 
 function flash_cache {
   sudo dscacheutil -flushcache
@@ -148,3 +172,7 @@ function flash_cache {
 alias xml_pp='xmllint --format -'
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+# export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
+# export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
