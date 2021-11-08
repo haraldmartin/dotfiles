@@ -42,3 +42,5 @@ Support/build/
 *.swp
 *.swm
 *.swn
+NOTES-hms.md
+_*-ignore.*
