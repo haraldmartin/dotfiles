@@ -98,6 +98,7 @@ alias pg.start='pg_ctl@14 -D /usr/local/var/postgres -l /usr/local/var/postgres/
 alias pg.stop='pg_ctl@14 -D /usr/local/var/postgres stop -s -m fast'
 
 alias serve='python -m SimpleHTTPServer 8000'
+alias r='bin/rails'
 alias transmit='open -a Transmit'
 # alias restart='touch tmp/restart.txt'
 
