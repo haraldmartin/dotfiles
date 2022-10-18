@@ -130,8 +130,6 @@ Plug 'mhinz/vim-signify'
 " Plug 'junegunn/vim-slash'
 
 " Languages
-Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'alvan/vim-closetag'
   let g:closetag_filenames = '*.js'
 Plug 'tpope/vim-rails'
@@ -141,12 +139,25 @@ Plug 'othree/html5-syntax.vim'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-ragtag'
 Plug 'tweekmonster/django-plus.vim'
-" Plug 'vim-test/vim-test'
+" JavaScript + TypeScript
+" (https://thoughtbot.com/blog/modern-typescript-and-react-development-in-vim)
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  let g:coc_global_extensions = [
+    \ 'coc-tsserver'
+    \ ]
 
 " Multi
 Plug 'tpope/vim-dispatch'
 
-Plug 'aserebryakov/vim-todo-lists'
+" Plug 'aserebryakov/vim-todo-lists'
+Plug 'ruanyl/vim-gh-line'
+  let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
 " Initialize plugin system
 call plug#end()
