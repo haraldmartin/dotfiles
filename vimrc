@@ -360,8 +360,9 @@ nnoremap <Leader>H :History<CR>
 nnoremap <Leader>L :Lines<CR>
 nnoremap <Leader>' :Marks<CR>
 
-nnoremap <leader>a :Ack<space>
+" nnoremap <leader>a :Ack<space>
 nnoremap <Leader>/ :Rg<Space>
+nnoremap <leader>a :Rg <c-r><c-w><cr>
 
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
