@@ -23,6 +23,8 @@ Plug 'vim-airline/vim-airline-themes'
   " let g:airline#extensions#tabline#enabled = 1
 
 " Colors
+Plug 'ackyshake/Spacegray.vim'
+  let g:spacegray_use_italics = 1
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'morhetz/gruvbox'
 Plug 'cocopon/iceberg.vim'
@@ -33,8 +35,11 @@ Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'saltdotac/citylights.vim'
 Plug 'junegunn/seoul256.vim'
   let g:seoul256_background = 233
-Plug 'wojciechkepka/vim-github-dark'
-  let g:gh_color = "soft"
+" Plug 'wojciechkepka/vim-github-dark'
+"   let g:gh_color = "soft"
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
+
 
 " File + buffer management
 " Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
