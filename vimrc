@@ -55,10 +55,10 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-vinegar'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-set rtp+=/usr/local/bin/fzf
+  set rtp+=/usr/local/bin/fzf
 
 Plug 'junegunn/fzf.vim'
-let g:fzf_layout = { 'down': '70%' }
+  let g:fzf_layout = { 'down': '70%' }
 
 Plug 'mileszs/ack.vim'
 
@@ -66,18 +66,42 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/rainbow_parentheses.vim'
-autocmd VimEnter * RainbowParentheses
-
-Plug 'psf/black'
-  autocmd BufWritePre *.py execute ':silent Black'
-  let g:black_virtualenv = "~/.vim-black"
+  autocmd VimEnter * RainbowParentheses
 
 
+Plug 'dense-analysis/ale'
+  let g:ale_fixers = {
+  \   'javascript': ['prettier', 'eslint'],
+  \   'javascriptreact': ['prettier', 'eslint'],
+  \   'typescript': ['prettier', 'eslint'],
+  \   'typescriptreact': ['prettier', 'eslint'],
+  \   'python': ['black', 'isort'],
+  \   'css': ['prettier'],
+  \   'scss': ['prettier']
+  \}
 
-Plug 'brentyi/isort.vim'
-  let g:isort_vim_options = '--profile black'
+  let g:ale_linters = {
+  \   'javascript': ['eslint'],
+  \   'javascriptreact': ['eslint'],
+  \   'python': ['pylint'],
+  \   'typescript': ['eslint', 'tsserver'],
+  \   'typescriptreact': ['eslint', 'tsserver']
+  \}
 
-Plug 'haraldmartin/vim-filetype-formatter'
+  let g:ale_fix_on_save = 1
+  let g:ale_linters_explicit = 1 " tell ALE to run only linters you've explicitly configured
+  let g:ale_python_isort_options = '--profile black'
+  let g:ale_python_pylint_options = '--load-plugins pylint_django'
+
+" Plug 'psf/black'
+"   let g:black_virtualenv = "~/.vim-black"
+"   autocmd BufWritePre *.py execute ':silent Black'
+
+" Plug 'brentyi/isort.vim'
+"   let g:isort_vim_options = '--profile black'
+"   autocmd BufWritePre *.py execute ':silent Isort'
+
+" Plug 'haraldmartin/vim-filetype-formatter'
 " Plug 'cohama/lexima.vim' " autoclose parenthesis
 Plug 'Townk/vim-autoclose'
 
