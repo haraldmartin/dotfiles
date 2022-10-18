@@ -432,12 +432,12 @@ cmap w!! w !sudo tee > /dev/null %
 " nnoremap <leader>f :FiletypeFormat<cr>
 " vnoremap <leader>f :FiletypeFormat<cr>
 
-"autocmd BufWritePre *.py Isort
-autocmd BufWritePre *.py FiletypeFormat
-autocmd BufWritePre *.js FiletypeFormat
-autocmd BufWritePre *.jsx FiletypeFormat
-autocmd BufWritePre *.css FiletypeFormat
-autocmd BufWritePre *.scss FiletypeFormat
+" autocmd BufWritePre *.py Isort
+" autocmd BufWritePre *.py FiletypeFormat
+" autocmd BufWritePre *.js FiletypeFormat
+" autocmd BufWritePre *.jsx FiletypeFormat
+" autocmd BufWritePre *.css FiletypeFormat
+" autocmd BufWritePre *.scss FiletypeFormat
 
 autocmd BufWritePost *vimrc,*exrc :call feedkeys(":source %\<cr>")
 
