@@ -44,3 +44,4 @@ Support/build/
 *.swn
 NOTES-hms.md
 _*-ignore.*
+*-ignore/
