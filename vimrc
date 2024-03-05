@@ -352,6 +352,21 @@ nnoremap <C-y> 3<C-y>
 vmap > >gv
 vmap < <gv
 
+" Tab mappings.
+noremap <C-Left> :tabp<CR>
+noremap <C-Right> :tabn<CR>
+noremap <leader>t :tabp<CR>
+noremap <leader>y :tabn<CR>
+
+" Always show tab bar
+" set showtabline=2
+
+" Split screen things
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 " Edit shortcuts (from http://vimcasts.org/episodes/the-edit-command)
 nnoremap <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
