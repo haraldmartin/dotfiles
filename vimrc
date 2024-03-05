@@ -4,12 +4,11 @@
 " stevelosh.com/blog/2010/09/coming-home-to-vim
 " github.com/junegunn/dotfiles
 
-set nocompatible                      " Must come first because it changes other options.
+" Must come first because it changes other options.
+set nocompatible
 
 " so custom key mapping in plugins section work
 let mapleader = ","
-
-
 
 " ----------- plugins --------------------------------------------------------
 
@@ -24,7 +23,7 @@ Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 " Plug 'powerline/powerline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-  " let g:airline#extensions#tabline#enabled = 1
+
 Plug 'szw/vim-maximizer'
   nnoremap <silent> <Leader>m :MaximizerToggle<CR>
 
@@ -109,7 +108,7 @@ Plug 'rhysd/git-messenger.vim' " Show git commit messages under cursor with lead
 Plug 'junegunn/gv.vim' " A git commit browser.
 Plug 'mhinz/vim-signify' " Show git diff in gutter
   let g:signify_vcs_list = ['git']
-  
+
 " Snippets
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
@@ -190,7 +189,6 @@ endif
 " Multi
 Plug 'tpope/vim-dispatch'
 
-" Plug 'aserebryakov/vim-todo-lists'
 Plug 'ruanyl/vim-gh-line'
   let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
@@ -216,7 +214,7 @@ if has('termguicolors')
 endif
 
 if has('nvim')
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   set termguicolors
 endif
 
@@ -284,9 +282,9 @@ set autoread
 " MacVim checks for autoread when it gains focus; terminal Vim
 " must trigger checks. Do so when switching buffers, or after
 " 2 secs (the value of updatetime) of pressing nothing.
-set updatetime=2000
-au WinEnter,BufWinEnter,CursorHold * checktime
-set autowrite
+" set updatetime=2000
+" au WinEnter,BufWinEnter,CursorHold * checktime
+" set autowrite
 
 " dont include included files when completing
 set complete-=i
@@ -458,22 +456,8 @@ cmap w!! w !sudo tee > /dev/null %
 
 autocmd BufWritePost *vimrc,*exrc :call feedkeys(":source %\<cr>")
 
-" -------= plugin ssettings ------------------------
+" -------= plugin settings ------------------------
 
-"p let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" nnoremap ,. :nnoremap ,, :Dispatch docker-compose exec worker python manage.py
-"        \ test --failfast --keepdb --debug-mode --noinput customers.tests
-" nnoremap ,. :nnoremap ,, :Dispatch docker-compose exec worker pytest --reuse-db --exitfirst % \<CR><CR>
-" nnoremap ,- :echo \:Dispatch fab test:backend,customers.tests
 function! DispatchDockerTest(currentFile)
     execute 'nnoremap ,, :Dispatch docker-compose exec worker pytest --reuse-db --exitfirst -W ignore::DeprecationWarning ' . a:currentFile . '<CR>'
 endfunction
