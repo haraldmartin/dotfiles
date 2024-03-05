@@ -6,6 +6,10 @@
 
 set nocompatible                      " Must come first because it changes other options.
 
+" so custom key mapping in plugins section work
+let mapleader = ","
+
+
 
 " ----------- plugins --------------------------------------------------------
 
@@ -159,11 +163,10 @@ Plug 'tpope/vim-dispatch'
 Plug 'ruanyl/vim-gh-line'
   let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
+
+
 " Initialize plugin system
 call plug#end()
-
-
-let mapleader = ","
 
 
 " ----- settings --------------------------------------------------------------
