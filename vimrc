@@ -393,6 +393,9 @@ vnoremap ; :
 nnoremap : ;
 vnoremap : ;
 
+" NVIM sets Y to yank to end of line, but I prefer the old behavior
+nnoremap Y yy
+
 " command to strip all trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
