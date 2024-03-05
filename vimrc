@@ -441,13 +441,6 @@ function! CleanClose(tosave)
   exe "bd".todelbufNr
 endfunction
 
-" function! MapTests()
-  " nnoremap ,, :Dispatch ls /
-" endfunction
-
-
-" nmap ,, :w \| !ruby -Itest %<cr>
-
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
@@ -467,9 +460,9 @@ autocmd BufWritePost *vimrc,*exrc :call feedkeys(":source %\<cr>")
 
 " -------= plugin ssettings ------------------------
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"p let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -477,8 +470,15 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-nnoremap ,, :Dispatch fab test:backend,customers.tests
+" nnoremap ,. :nnoremap ,, :Dispatch docker-compose exec worker python manage.py
+"        \ test --failfast --keepdb --debug-mode --noinput customers.tests
+" nnoremap ,. :nnoremap ,, :Dispatch docker-compose exec worker pytest --reuse-db --exitfirst % \<CR><CR>
 " nnoremap ,- :echo \:Dispatch fab test:backend,customers.tests
+function! DispatchDockerTest(currentFile)
+    execute 'nnoremap ,, :Dispatch docker-compose exec worker pytest --reuse-db --exitfirst -W ignore::DeprecationWarning ' . a:currentFile . '<CR>'
+endfunction
+
+nnoremap ,. :call DispatchDockerTest(expand('%'))<CR>
 
 " ------ auto commmands ------------------------------------------------------
 
