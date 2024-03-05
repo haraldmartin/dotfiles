@@ -25,6 +25,8 @@ Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
   " let g:airline#extensions#tabline#enabled = 1
+Plug 'szw/vim-maximizer'
+  nnoremap <silent> <Leader>m :MaximizerToggle<CR>
 
 " Colors
 Plug 'ackyshake/Spacegray.vim'
@@ -39,39 +41,22 @@ Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'saltdotac/citylights.vim'
 Plug 'junegunn/seoul256.vim'
   let g:seoul256_background = 233
-" Plug 'wojciechkepka/vim-github-dark'
-"   let g:gh_color = "soft"
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'arcticicestudio/nord-vim'
 
 
 " File + buffer management
-" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"   augroup nerd_loader
-"     autocmd!
-"     autocmd VimEnter * silent! autocmd! FileExplorer
-"     autocmd BufEnter,BufNew *
-"           \  if isdirectory(expand('<amatch>'))
-"           \|   call plug#load('nerdtree')
-"           \|   execute 'autocmd! nerd_loader'
-"           \| endif
-"   augroup END
 Plug 'tpope/vim-vinegar'
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   set rtp+=/usr/local/bin/fzf
-
 Plug 'junegunn/fzf.vim'
   let g:fzf_layout = { 'down': '70%' }
-
-Plug 'mileszs/ack.vim'
 
 " Formatting
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/rainbow_parentheses.vim'
   autocmd VimEnter * RainbowParentheses
-
 
 Plug 'dense-analysis/ale'
   let g:ale_fixers = {
@@ -80,50 +65,49 @@ Plug 'dense-analysis/ale'
   \   'typescript': ['prettier', 'eslint'],
   \   'typescriptreact': ['prettier', 'eslint'],
   \   'python': ['black', 'isort'],
-  \   'css': ['prettier'],
-  \   'scss': ['prettier']
+  \   'css': ['prettier', 'stylelint'],
+  \   'scss': ['prettier', 'stylelint']
   \}
 
   let g:ale_linters = {
   \   'javascript': ['eslint'],
   \   'javascriptreact': ['eslint'],
-  \   'python': ['pylint'],
   \   'typescript': ['eslint', 'tsserver'],
-  \   'typescriptreact': ['eslint', 'tsserver']
+  \   'typescriptreact': ['eslint', 'tsserver'],
+  \   'python': ['flake8']
   \}
 
+  "   'python': ['flake8']
+  " 'python': ['pylint']
+
+  let g:ale_completion_enabled = 1
   let g:ale_fix_on_save = 1
   let g:ale_linters_explicit = 1 " tell ALE to run only linters you've explicitly configured
   let g:ale_python_isort_options = '--profile black'
-  let g:ale_python_pylint_options = '--load-plugins pylint_django'
+  let g:ale_python_pylint_options = '--load-plugins pylint_django '
+        \'--disable=django-not-configured '
+        \'--django-settings-module=allinsights.settings'
 
-" Plug 'psf/black'
-"   let g:black_virtualenv = "~/.vim-black"
-"   autocmd BufWritePre *.py execute ':silent Black'
+  " nmap <silent> <leader>an :ALENext<cr>
+  " nmap <silent> <leader>ap :ALEPrevious<cr>
 
-" Plug 'brentyi/isort.vim'
-"   let g:isort_vim_options = '--profile black'
-"   autocmd BufWritePre *.py execute ':silent Isort'
-
-" Plug 'haraldmartin/vim-filetype-formatter'
-" Plug 'cohama/lexima.vim' " autoclose parenthesis
 Plug 'Townk/vim-autoclose'
 
 " Navigating
-Plug 'tpope/vim-surround'
-Plug 'vim-scripts/camelcasemotion'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-endwise'
-Plug 'vim-scripts/tComment'
-Plug 'AndrewRadev/sideways.vim'
+Plug 'tpope/vim-surround' " Change surrounding characters
+" Plug 'vim-scripts/camelcasemotion' " Move between camelCase words
+Plug 'tpope/vim-unimpaired' " [b and ]b to navigate buffers and more
+Plug 'tpope/vim-endwise' " Auto insert end in ruby/elixir/djangohtml
+Plug 'vim-scripts/tComment' " Toggle comments
+Plug 'AndrewRadev/sideways.vim' " Move arguments left and right
 
 " Git
 Plug 'tpope/vim-fugitive'
   nmap     <Leader>g :Gstatus<CR>gg<c-n>
   nnoremap <Leader>d :Gdiff<CR>
-Plug 'rhysd/git-messenger.vim'
+Plug 'rhysd/git-messenger.vim' " Show git commit messages under cursor with leader gm
 Plug 'junegunn/gv.vim' " A git commit browser.
-Plug 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify' " Show git diff in gutter
   let g:signify_vcs_list = ['git']
   
 " Snippets
@@ -151,10 +135,57 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = [
-    \ 'coc-tsserver'
-    \ ]
+" Run tests from vim
+Plug 'vim-test/vim-test'
+
+if has('nvim')
+  Plug 'github/copilot.vim'
+endif
+
+" Plug 'puremourning/vimspector'
+  let g:vimspector_enable_mappings = 'HUMAN'
+
+"  -----------------------------------------------------------------------------------
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"   let g:coc_global_extensions = [
+"     \ 'coc-tsserver'
+"     \ ]
+
+  " nnoremap <silent> K :call CocAction('doHover')<CR>
+  "
+  " function! ShowDocIfNoDiagnostic(timer_id)
+  "   if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+  "     silent call CocActionAsync('doHover')
+  "   endif
+  " endfunction
+  "
+  " function! s:show_hover_doc()
+  "   call timer_start(500, 'ShowDocIfNoDiagnostic')
+  " endfunction
+  "
+  " autocmd CursorHoldI * :call <SID>show_hover_doc()
+  " autocmd CursorHold * :call <SID>show_hover_doc()
+  "
+  " nmap <leader>do <Plug>(coc-codeaction)
+  "
+  " set signcolumn=yes
+
+  " Use tab for trigger completion with characters ahead and navigate.
+  " NOTE: There's always complete item selected by default, you may want to enable
+  " no select by "suggest.noselect": true in your configuration file.
+  " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+  " other plugin before putting this into your config.
+  " inoremap <silent><expr> <TAB>
+  "       \ coc#pum#visible() ? coc#pum#next(1) :
+  "       \ CheckBackspace() ? "\<Tab>" :
+  "       \ coc#refresh()
+  " inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+  "
+  " " Make <CR> to accept selected completion item or notify coc.nvim to format
+  " " <C-g>u breaks current undo, please make your own choice.
+  " inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+  "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"  -----------------------------------------------------------------------------------
 
 " Multi
 Plug 'tpope/vim-dispatch'
@@ -163,6 +194,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'ruanyl/vim-gh-line'
   let g:gh_open_command = 'fn() { echo "$@" | pbcopy; }; fn '
 
+Plug 'ranelpadon/python-copy-reference.vim'
+  nnoremap <Leader>cp :PythonCopyReferenceDotted<CR>
 
 
 " Initialize plugin system
