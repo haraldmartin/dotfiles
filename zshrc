@@ -1,94 +1,75 @@
+# Initialize Homebrew first (before oh-my-zsh)
+if [[ -e '/opt/homebrew' ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  eval "$(/usr/local/Homebrew/bin/brew shellenv)"
+fi
+
 export ZSH=$HOME/.oh-my-zsh
 
-# ZSH_THEME="avit"
-# ZSH_THEME="norm-hms"
 ZSH_THEME="refined"
-# ZSH_THEME="spaceship"
 
 COMPLETION_WAITING_DOTS="true"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# plugins=(git rails rsync heroku rake bundler brew themes rbenv)
+# Don't ask before loading .env files
+ZSH_DOTENV_PROMPT=false
+
 plugins=(
-  git 
-  rails ruby 
-  rsync 
-  heroku 
-  brew 
-  themes 
-  iterm2 
-  zsh-autosuggestions
+  dotenv
+  git
+  fabric
+  ssh
+  ruby
+  brew
+  iterm2
   zsh-fzf-history-search
 )
 
 source $ZSH/oh-my-zsh.sh
-
-# autoload -U promptinit; promptinit
-# prompt refined
-
-# color=[38;5;23m]
-# export PROMPT="%F{color%(1j. %j .)$PROMPT"
+source ~/.zsh-plugins/fzf-git.sh/fzf-git.sh
 
 # show bg jobs in prompt
 export PROMPT="%(1j. %j .)$PROMPT"
-# eval "$(starship init zsh)"
 
-# User configuration
-
-export PATH="/Users/martin/.rbenv/shims:/Users/martin/.rbenv/bin:/Users/martin/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/share/npm/bin/:"
+# PATH (Homebrew paths already set above)
+export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$PATH"
-export PATH=$PATH:/usr/local/Cellar/gettext/0.20.1/bin
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-alias vim="/usr/local/bin/vim"
-export EDITOR='vim'
+export EDITOR='nvim'
 
+# editor / files
 alias e="$EDITOR"
+alias vim="$EDITOR"
+alias view="$EDITOR -R"
 alias v="view"
 alias o='open'
-alias l=exa
+alias c='bat'
 alias b=bat
+alias l=eza
+alias ll='eza -l --group-directories-first'
+alias ql='qlmanage -p'
+alias hosts='sudo $EDITOR /etc/hosts'
 
+# navigation
+alias p='cd ~/Projects'
+alias s='cd ~/Projects/SAFAB/machine/CODEBASE/src'
+
+# ssh
 alias myd='ssh myd'
-alias reload='. ~/.zshrc'
+alias hms='ssh hms01'
 
-alias pg_ctl@14='/usr/local/opt/postgresql@14/bin/pg_ctl'
-alias pg_ctl-local='pg_ctl@14 -D /usr/local/var/postgres-local -l /usr/local/var/postgres/server.log start'
-alias pg.start='pg_ctl@14 -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias pg.stop='pg_ctl@14 -D /usr/local/var/postgres stop -s -m fast'
-
-# export BAT_THEME=ansi
-export BAT_STYLE=plain
-
-alias serve='python -m SimpleHTTPServer 8000'
-alias r='bin/rails'
-alias transmit='open -a Transmit'
-
-# GIT
-alias gs='git status'
-
-# https://github.com/dandavison/delta
-unalias gd
-function gd {
-  if [ $(tput cols) -gt 150 ]; then
-    git -c "core.pager=delta --side-by-side" diff $*
-  else
-    git diff $*
-  fi
-}
-unalias gb
-
-function gb {
-  git switch $(git branch | fzf)
-}
-
-alias nr='npm run'
-alias now='date +"%Y-%m-%d@%H-%M-%S"'
+# git
+alias lg=lazygit
+unalias gm gd gb
 
 # docker
 alias d-c='docker compose'
@@ -97,66 +78,143 @@ alias de='docker compose exec'
 alias dcu='docker compose up'
 alias dcd='docker compose down'
 alias docker-prune='docker container prune && docker images prune && docker system prune'
+
+# python / tools
+alias py="python"
+alias uvr='uv run'
+alias f='uv run fab'
+alias json_ppy='python -m json.tool'
+
+# misc
+alias xc='xed .'
+alias clear-derived-data='rm -rf ~/Library/Developer/Xcode/DerivedData/*'
+alias j='jobs'
+alias now='date +"%Y-%m-%d@%H-%M-%S"'
+alias reload='. ~/.zshrc'
+
+# https://github.com/dandavison/delta
+function gd {
+  if [ $(tput cols) -gt 150 ]; then
+    git -c "core.pager=delta --side-by-side" diff "$@"
+  else
+    git diff "$@"
+  fi
+}
+
+function gb {
+  _fzf_git_each_ref --no-multi | xargs git checkout
+}
+
 rebuild() {
   docker compose stop $1
   docker compose build $1
   docker compose up $1
 }
 
+scp_rel() {
+  local host=$1
+  shift
+  local r=/Users/automatfoto/SAFAB/automatfoto-git/CODEBASE/src
+  for file in "$@"; do
+    echo "$file"
+    scp "$host:$r/$file" "$file"
+  done
+}
 
-# django
-m() { PYTHONIOENCODING=utf8 fab manage:"$*" }
-mt() { m test,"--failfast,--keepdb,--debug-mode,--noinput,$*" }
+function secret {
+  if [[ -z "$1" ]]; then
+    echo "Usage: secret length"
+    return 1
+  fi
 
-alias ml='scripts/manage_local.sh'
-mtl() { ml test --failfast --keepdb --debug-mode --noinput $* }
+  if [[ "$1" == "chute" ]]; then
+    python3 << 'EOF'
+import random, string
+chars = string.ascii_letters + string.digits
+user = ''.join(random.choices(chars, k=16))
+pass_ = ''.join(random.choices(chars, k=16))
+print(f'{user}:{pass_}')
+EOF
+    return 0
+  fi
 
-alias ms='fab server'
-alias mc='m shell_plus --print-sql'
+  python3 -c "import random, string; print(''.join(random.choices(string.ascii_letters + string.digits, k=$1)))"
+}
 
-# work
-alias ae='pyenv activate allears && cd ~/Projects/AllEars/allears'
-alias isort='isort --profile black'
+function vnc {
+  if [[ -z "$1" ]]; then
+    echo "Usage: vnc <user:password><host>"
+    return 1
+  fi
+  open "vnc://$*"
+}
 
+pdfcompress () {
+  # brew install ghostscript
+  gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite \
+    -dCompatibilityLevel=1.3 \
+    -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true \
+    -dColorImageDownsampleType=/Bicubic -dColorImageResolution=144 \
+    -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=144 \
+    -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=144 \
+    -sOutputFile="$1.compressed.pdf" "$1"
+}
 
-alias j='jobs'
-alias f='fg %-'
-alias hosts='sudo $EDITOR /etc/hosts'
-alias json_ppy='python -m json.tool'
+# Source .venv/bin/activate if it exists, on every cd and for the initial directory
+function source_venv() {
+  if [[ -f .venv/bin/activate ]]; then
+    source .venv/bin/activate
+  fi
+}
 
-alias xml_pp='xmllint --format -'
+autoload -U add-zsh-hook
+add-zsh-hook chpwd source_venv
+source_venv
 
-export SHELL=/bin/zsh
+# Tab on a SAF... prefix picks a SAFAB location with fzf, otherwise normal completion
+_safab_complete() {
+  local words=("${(z)LBUFFER}")
+  local prefix="${words[-1]}"
 
-if [[ -e '/opt/homebrew' ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  eval "$(/usr/local/Homebrew/bin/brew shellenv)"
-fi
+  [[ "${prefix:u}" != SAF* ]] && return 1
 
+  local results
+  results=$(uv run ~/Projects/SAFAB/get_dashboard_locations.py --cred-path ./serviceAccountKey-safab.json 2>/dev/null \
+    | grep -oE 'SAFAB[0-9]+: .+' \
+    | while IFS=': ' read -r code name; do
+        printf "%s\t%s\n" "$code" "$name"
+      done)
 
-# Python + pyenv
-if command -v pyenv > /dev/null; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+  [[ -z "$results" ]] && return 1
 
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
+  local filtered
+  filtered=$(echo "$results" | grep -i "^${prefix}")
+  [[ -z "$filtered" ]] && filtered="$results"
 
-if command -v rbenv > /dev/null; then
-  eval "$(rbenv init - zsh)"
-fi
+  local selected
+  selected=$(echo "$filtered" \
+    | fzf --height=40% --reverse --delimiter='\t' \
+        --with-nth=1,2 \
+        --preview-window=hidden \
+        --prompt="SAFAB> " \
+    | cut -f1 \
+    | tr '[:upper:]' '[:lower:]')
 
-eval "$(direnv hook zsh)"
+  [[ -z "$selected" ]] && return 1
 
+  # Remove the typed prefix and insert the selection
+  LBUFFER="${LBUFFER[1,-${#prefix}-1]}${selected}"
+  zle reset-prompt
+}
 
-# export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
-# export PATH="$HOME/Library/Python/2.7/bin:$PATH"
-# export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+_smart_tab() {
+  local prefix="${LBUFFER##* }"
+  if [[ "${prefix:u}" == SAF* ]]; then
+    _safab_complete
+  else
+    zle expand-or-complete  # default tab behavior
+  fi
+}
 
-# Must be last
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export PATH="/opt/homebrew/opt/openssl@1.0/bin:$PATH"
+zle -N _smart_tab
+bindkey '^I' _smart_tab
